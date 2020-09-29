@@ -13,22 +13,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.99999994, y: 0.24999999, z: 0.99999994}
   m_Center: {x: 0, y: 0.12499999, z: 0}
---- !u!114 &5739784709834937950
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3342169046967972047}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 0
-  serverOnly: 1
-  m_AssetId: 
-  hasSpawned: 0
 --- !u!1 &8905710123903054282
 GameObject:
   m_ObjectHideFlags: 0
@@ -38,9 +22,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8288928715095389909}
-  - component: {fileID: 5458404598227656475}
-  m_Layer: 0
-  m_Name: GroundMap
+  - component: {fileID: 6290952453480932211}
+  m_Layer: 8
+  m_Name: GroundGrass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61,7 +45,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5458404598227656475
+--- !u!114 &6290952453480932211
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -74,7 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneId: 0
-  serverOnly: 1
+  serverOnly: 0
   m_AssetId: 
   hasSpawned: 0
 --- !u!1001 &2495184252373159326
@@ -154,10 +138,20 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: edc0a0dcbc35edf4a9ddf9a9bd8d7c20,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: edc0a0dcbc35edf4a9ddf9a9bd8d7c20,
         type: 3}
       propertyPath: m_Name
       value: cliff_blockQuarter_stone
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: edc0a0dcbc35edf4a9ddf9a9bd8d7c20,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: edc0a0dcbc35edf4a9ddf9a9bd8d7c20, type: 3}

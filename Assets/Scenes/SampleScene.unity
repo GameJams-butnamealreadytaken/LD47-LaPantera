@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -195,7 +195,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 1.4e-44, z: 2.887e-42, w: 1.04e-43}
+  m_BoundingSphereOverride: {x: 6.82e-43, y: 9.4e-44, z: 0, w: -5.5138694e-10}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -378,10 +378,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2677976735385168501, guid: 2612ec5289facf949acdd58ee18442b1,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677976735385168501, guid: 2612ec5289facf949acdd58ee18442b1,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 5458404598227656475, guid: 2612ec5289facf949acdd58ee18442b1,
         type: 3}
       propertyPath: sceneId
       value: 398989201
+      objectReference: {fileID: 0}
+    - target: {fileID: 5458404598227656475, guid: 2612ec5289facf949acdd58ee18442b1,
+        type: 3}
+      propertyPath: serverOnly
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5739784709834937950, guid: 2612ec5289facf949acdd58ee18442b1,
         type: 3}
@@ -396,7 +411,7 @@ PrefabInstance:
     - target: {fileID: 8288928715095389909, guid: 2612ec5289facf949acdd58ee18442b1,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 8288928715095389909, guid: 2612ec5289facf949acdd58ee18442b1,
         type: 3}

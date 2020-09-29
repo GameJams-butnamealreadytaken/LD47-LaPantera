@@ -1,18 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : NetworkBehaviour
 {
-    // Start is called before the first frame update
+    public float MoveSpeed = 50.0f;
+    private Rigidbody rb;
+
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    void Update()
+    [Client]
+    void FixedUpdate()
     {
-        
+        if (!hasAuthority)
+            return;
+
+        float fHorizontal = Input.GetAxis("Horizontal");
+        float fVertical = Input.GetAxis("Vertical");
+
+        float fSpeed = MoveSpeed * Time.deltaTime;
+        rb.velocity = new Vector3(fHorizontal * fSpeed, rb.velocity.y, fVertical * fSpeed);
     }
 }

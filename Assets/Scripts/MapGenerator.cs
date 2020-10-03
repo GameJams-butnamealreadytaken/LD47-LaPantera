@@ -33,6 +33,9 @@ public class MapGenerator : NetworkBehaviour
 
     public int yHeight = -3;
 
+    private Vector2 _realSize;
+    private Vector2 _middlePoint;
+
     [Tooltip("Sum of probabilities must be equal to one")] 
     public List<BiomeInfo> biomeList;
 
@@ -42,6 +45,9 @@ public class MapGenerator : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _realSize = new Vector2(mapXSize * tileXScale, mapZSize * tileZScale);
+        _middlePoint = _realSize / 2.0f;
+        
         MapBiomeToProbabilityRanges();
         GenerateMap();
         PlaceSpecialObjects();
@@ -51,6 +57,16 @@ public class MapGenerator : NetworkBehaviour
     void Update()
     {
         
+    }
+
+    public Vector2 GetRealSize()
+    {
+        return _realSize;
+    }
+
+    public Vector2 GetMiddlePointWorld()
+    {
+        return transform.position + new Vector3(_middlePoint.x, yHeight, _middlePoint.y);
     }
 
     [Server]
@@ -107,16 +123,11 @@ public class MapGenerator : NetworkBehaviour
     [Server]
     private void PlaceSpecialObjects()
     {
-        int realMapXSize = mapXSize * tileXScale;
-        int realMapZSize = mapZSize * tileZScale;
-        
-        Vector2 middlePoint = new Vector2(realMapXSize / 2.0f, realMapZSize / 2.0f);
-        
         Vector4[] spawnBoxes = new Vector4[4];
-        spawnBoxes[0] = new Vector4(0, 0, middlePoint.x - specialObjectsMinDistanceFromSpawn, realMapZSize);
-        spawnBoxes[1] = new Vector4(middlePoint.x + specialObjectsMinDistanceFromSpawn, 0, realMapXSize, realMapZSize);
-        spawnBoxes[2] = new Vector4(0, 0, realMapXSize, middlePoint.y - specialObjectsMinDistanceFromSpawn);
-        spawnBoxes[3] = new Vector4(0, middlePoint.y + specialObjectsMinDistanceFromSpawn, realMapXSize, realMapZSize);
+        spawnBoxes[0] = new Vector4(0, 0, _middlePoint.x - specialObjectsMinDistanceFromSpawn, _realSize.y);
+        spawnBoxes[1] = new Vector4(_middlePoint.x + specialObjectsMinDistanceFromSpawn, 0, _realSize.x, _realSize.y);
+        spawnBoxes[2] = new Vector4(0, 0, _realSize.x, _middlePoint.y - specialObjectsMinDistanceFromSpawn);
+        spawnBoxes[3] = new Vector4(0, _middlePoint.y + specialObjectsMinDistanceFromSpawn, _realSize.x, _realSize.y);
 
         foreach (GameObject specialObject in specialObjects)
         {

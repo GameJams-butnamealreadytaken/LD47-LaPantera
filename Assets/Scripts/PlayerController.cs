@@ -9,6 +9,10 @@ public class PlayerController : NetworkBehaviour
     public GameObject CharacterModel;
     public float MoveSpeed = 150.0f;
 
+    public Camera PlayerCamera;
+    public AudioListener PlayerAudioListener;
+    public PlayerInput Inputs;
+
     private Rigidbody rb;
     private Animator animator;
 
@@ -20,8 +24,13 @@ public class PlayerController : NetworkBehaviour
     [Client]
     void Start()
     {
+        if (!hasAuthority)
+            return;
+
         rb = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
+        Inputs.defaultControlScheme = "KeyboardMosue";
+        Inputs.defaultActionMap = "Gameplay";
     }
 
     [Client]
@@ -57,9 +66,17 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
+    [Client]
     // Update is called once per frame
     void Update()
     {
+        if (!hasAuthority)
+        {
+            PlayerCamera.enabled = false;
+            PlayerAudioListener.enabled = false;
+            return;
+        }
+
         Vector2 vMiddleScreen = new Vector2(Camera.main.pixelWidth * 0.5f, Camera.main.pixelHeight * 0.5f);
         Vector2 vMouse = Mouse.current.position.ReadValue();
 

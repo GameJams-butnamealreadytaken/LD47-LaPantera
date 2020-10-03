@@ -32,13 +32,17 @@ public class MapGenerator : NetworkBehaviour
     public int yHeight = -3;
 
     [Tooltip("Sum of probabilities must be equal to one")] 
-    public List<BiomeInfo> biomeList; 
+    public List<BiomeInfo> biomeList;
+
+    [Tooltip("Objects that must be spawned in the map")]
+    public List<GameObject> specialObjects;
     
     // Start is called before the first frame update
     void Start()
     {
         MapBiomeToProbabilityRanges();
         GenerateMap();
+        //PlaceSpecialObjects();
     }
 
     // Update is called once per frame
@@ -59,15 +63,17 @@ public class MapGenerator : NetworkBehaviour
                 GameObject tile = Instantiate(biomeToSpawnInfo.biome.gameObject, new Vector3(currentX, yHeight, currentZ), Quaternion.identity);
                 tile.transform.localScale = new Vector3(tileXScale, 1, tileZScale);
                 
+                tile.transform.SetParent(this.transform);
+
                 NetworkServer.Spawn(tile);
                 
-                GenerateBiome(biomeToSpawnInfo.biome, new Vector2(currentX, currentZ));
+                GenerateBiome(tile, biomeToSpawnInfo.biome, new Vector2(currentX, currentZ));
             }
         }
     }
 
     [Server]
-    private void GenerateBiome(Biome biome, Vector2 startPos)
+    private void GenerateBiome(GameObject tile, Biome biome, Vector2 startPos)
     {
         Vector2 endPos = new Vector2(startPos.x + tileXScale, startPos.y + tileZScale);
 
@@ -77,13 +83,13 @@ public class MapGenerator : NetworkBehaviour
 
             for (int objectIndex = 0; objectIndex < objectToSpawnCount; ++objectIndex)
             {
-                PlaceObject(objectInfo.objectPrefab, startPos, endPos);
+                PlaceObject(tile, objectInfo.objectPrefab, startPos, endPos);
             }
         }
     }
 
     [Server]
-    private void PlaceObject(GameObject gameObject, Vector2 startPos, Vector2 endPos)
+    private void PlaceObject(GameObject tile, GameObject gameObject, Vector2 startPos, Vector2 endPos)
     {
         Vector3 objectPos = new Vector3();
         objectPos.x = Random.Range(startPos.x, endPos.x);
@@ -91,6 +97,8 @@ public class MapGenerator : NetworkBehaviour
         objectPos.z = Random.Range(startPos.y, endPos.y);
 
         GameObject spawnedObject = Instantiate(gameObject, objectPos, Quaternion.identity);
+        spawnedObject.transform.SetParent(tile.transform);
+        
         NetworkServer.Spawn(spawnedObject);
     }
 

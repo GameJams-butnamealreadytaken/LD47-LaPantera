@@ -6,7 +6,6 @@ using Mirror;
 public enum ECharacterType
 {
 	player,
-
 	enemy_zombie,
 };
 
@@ -41,7 +40,8 @@ public class BaseCharacter : NetworkBehaviour
 	// Start is called before the first frame update
 	protected void Start()
     {
-		ResetCharacteristicsToInitialValues();
+		if (hasAuthority)
+			ResetCharacteristicsToInitialValues();
 	}
 
 	[Command]

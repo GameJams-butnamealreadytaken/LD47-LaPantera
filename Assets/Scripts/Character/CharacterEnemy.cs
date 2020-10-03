@@ -21,6 +21,7 @@ public class CharacterEnemy : BaseCharacter
 		Assert.IsNotNull(m_agent);
 	}
 
+#if UNITY_EDITOR
 	void OnDrawGizmos()
 	{
 		if (m_bShowAggroRadius)
@@ -29,6 +30,7 @@ public class CharacterEnemy : BaseCharacter
 			UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.up, m_fAggroRadius);
 		}
 	}
+#endif // UNITY_EDITOR
 
 	private void FixedUpdate()
 	{
@@ -39,5 +41,4 @@ public class CharacterEnemy : BaseCharacter
 	private void Update()
 	{
 	}
-
 }

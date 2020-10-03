@@ -19,12 +19,14 @@ public class PlayerController : NetworkBehaviour
     private bool bWalking = false;
     private bool bInteracting = false;
 
+    private bool bResetInputs = true;
+
     [Client]
     void Start()
     {
         if (!hasAuthority || !isLocalPlayer)
         {
-            //Inputs.DeactivateInput();
+            Inputs.DeactivateInput();
             return;
         }
 
@@ -94,15 +96,21 @@ public class PlayerController : NetworkBehaviour
     {
         if (!hasAuthority || !isLocalPlayer)
         {
-            Inputs.enabled = false;
-
+            if (bResetInputs)
+            {
+                Inputs.enabled = false;
+            }
             return;
         }
         else
         {
-            //Inputs.SwitchCurrentActionMap(Inputs.defaultActionMap);
-            Inputs.SwitchCurrentControlScheme(Inputs.defaultControlScheme);
-            Inputs.ActivateInput();
+            if (bResetInputs)
+            {
+                //Inputs.SwitchCurrentActionMap(Inputs.defaultActionMap);
+                Inputs.SwitchCurrentControlScheme(Inputs.defaultControlScheme);
+                Inputs.ActivateInput();
+                bResetInputs = false;
+            }
         }
     }
 }

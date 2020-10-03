@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f257d82d7002e9f4abea511bec907e90, type: 3}
-  m_Name: Wood
+  m_Name: Emerald
   m_EditorClassIdentifier: 
-  m_name: Wood
-  m_description: A piece of wood
+  m_name: Emerald
+  m_description: A green emerald
   m_type: 0
-  m_icon: {fileID: 6935035408529717895, guid: eaae9e6d836151a4eb91550f49223083, type: 3}
+  m_icon: {fileID: -93006566689803346, guid: eaae9e6d836151a4eb91550f49223083, type: 3}
   m_prefab: {fileID: 0}

@@ -5,11 +5,17 @@ using Mirror;
 
 public abstract class BaseCharacterManager : NetworkBehaviour
 {
+	[Header("Properties")]
+	public string m_strName;
+
 	[Header("Spawn")]
 	public List<Vector2> m_aSpawnLocations;
+	public float m_fSpawnRadius = 0.0f;
 
 	[Header("Character prefabs")]
-	[Tooltip("0 = character\n1 = enemy_zombie")]
+	[Tooltip(	"0 = player\n" +
+				"1 = enemy_zombie")
+	]
 	public GameObject[] m_mapCharacterToPrefab = new GameObject[System.Enum.GetNames(typeof(ECharacterType)).Length];
 
 	private List<BaseCharacter> m_aCharacters = new List<BaseCharacter>();
@@ -22,35 +28,67 @@ public abstract class BaseCharacterManager : NetworkBehaviour
 			return false;
 		}
 
-		System.Random r = new System.Random();
-		Vector2 vXYLocation = m_aSpawnLocations[r.Next(m_aSpawnLocations.Count)];
-		vPosition.Set(vXYLocation.x, vXYLocation.y, 0.0f);
-		//qOrn = Quaternion.Euler(0.0f, 0.0f, (float)(r.NextDouble() * 360.0f));
-		qOrn = Quaternion.identity;
+		Vector2 vXZLocation = m_aSpawnLocations[Random.Range(0, m_aSpawnLocations.Count - 1)];
+		Vector2 vXZLocationRandom = Random.insideUnitCircle;
+		vXZLocationRandom.Normalize();
+		float fSpawnRadiusRandom = m_fSpawnRadius * Random.Range(0.0f, 1.0f);
+		vXZLocationRandom *= fSpawnRadiusRandom;
+		vXZLocation += vXZLocationRandom;
+		vPosition.Set(vXZLocation.x, 0.0f, vXZLocation.y);
+		qOrn = Quaternion.Euler(0.0f, Random.Range(0.0f, 1.0f) * 360.0f, 0.0f);
 
 		return true;
 	}
 
 	[Server]
-	public bool SpawnCharacter(ECharacterType eType, ref BaseCharacter baseCharacter)
+	public bool SpawnCharacters(ECharacterType eType, int iCharactersCount, ref List<BaseCharacter> aBaseCharacters)
 	{
-		if(SpawnCharacterInternal(eType, ref baseCharacter))
+		aBaseCharacters.Clear();
+
+		for(int iCharacterIndex = 0; iCharacterIndex < iCharactersCount; ++iCharacterIndex)
 		{
+			BaseCharacter character = new BaseCharacter();
+
+			//
+			// Retrieve transform to random spawn location
+			Vector3 vPosition = new Vector3();
+			Quaternion qOrn = new Quaternion();
+			if (!GetSpawnParameters(ref vPosition, ref qOrn))
+			{
+				return false;
+			}
+
+			//
+			// Instantiate prefab
+			GameObject prefab = m_mapCharacterToPrefab[(int)(eType)];
+			if (null == prefab)
+			{
+				Debug.Log("Could not spawn character type '" + eType + "' from manager '" + m_strName + "'");
+				continue;
+			}
+			
+			GameObject newCharacterObject = Instantiate(prefab, vPosition, qOrn);
+			character = newCharacterObject.GetComponent<CharacterEnemy>();
+			character.m_characterManager = this;
+
+			//
+			// Notify sub-class
+			OnCharacterAboutToBeSpawned(eType, ref character);
+
 			//
 			// Spawn character on server
-			NetworkServer.Spawn(baseCharacter.gameObject);
+			NetworkServer.Spawn(character.gameObject);
 
 			//
 			// Add character to list
-			m_aCharacters.Add(baseCharacter);
-
-			return true;
+			aBaseCharacters.Add(character);
+			m_aCharacters.Add(character);
 		}
 
-		return false;
+		return true;
 	}
 
-	protected abstract bool SpawnCharacterInternal(ECharacterType eType, ref BaseCharacter baseCharacter);
+	protected abstract void OnCharacterAboutToBeSpawned(ECharacterType eType, ref BaseCharacter baseCharacter);
 
 	protected abstract void OnCharacterAboutToBeDestroyed(BaseCharacter baseCharacter);
 

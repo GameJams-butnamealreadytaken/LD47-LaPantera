@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : NetworkBehaviour
 {
     public GameObject CharacterModel;
-    public float MoveSpeed = 150.0f;
+    public CharacterPlayer CharacterPlayer;
 
     public Camera PlayerCamera;
     public AudioListener PlayerAudioListener;
@@ -49,7 +49,7 @@ public class PlayerController : NetworkBehaviour
         float fVertical = InputMoveValues.y;
         if (fHorizontal != 0.0f || fVertical != 0.0f)
         {
-            float fSpeed = MoveSpeed * Time.deltaTime;
+            float fSpeed = CharacterPlayer.GetCurrentSpeed() * Time.deltaTime;
 
             //Vector3 vForward = CharacterModel.transform.forward * fVertical * fSpeed;
             //Vector3 vRight = CharacterModel.transform.right * fHorizontal * fSpeed;

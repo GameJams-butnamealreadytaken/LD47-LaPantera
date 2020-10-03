@@ -19,7 +19,7 @@ public class PlayerController : NetworkBehaviour
     [Client]
     void Start()
     {
-        rb = GetComponentInChildren<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
     }
 

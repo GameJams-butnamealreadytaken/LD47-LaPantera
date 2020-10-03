@@ -18,7 +18,7 @@ public class PlayerController : NetworkBehaviour
     private Vector2 InputMoveValues;
 
     private bool bWalking = false;
-    private bool bAttacking = false;
+    private bool bInteracting = false;
 
     [Client]
     void Start()
@@ -45,12 +45,13 @@ public class PlayerController : NetworkBehaviour
     [Client]
     public void OnAction(InputValue value)
     {
-        InteractableResource[] resources = FindObjectsOfType<InteractableResource>();
-
-        foreach (InteractableResource resource in resources)
+        if (bInteracting)
         {
-            resource.CmdGather();
+            return;
         }
+
+        bInteracting = true;
+        animator.SetBool("Interact", true);
     }
 
     [Client]
@@ -77,6 +78,13 @@ public class PlayerController : NetworkBehaviour
         {
             animator.SetBool("Walking", false);
             bWalking = false;
+        }
+
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Interact") &&
+            animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+        {
+            bInteracting = false;
+            animator.SetBool("Interact", false);
         }
 
         Vector2 vMiddleScreen = new Vector2(Camera.main.pixelWidth * 0.5f, Camera.main.pixelHeight * 0.5f);

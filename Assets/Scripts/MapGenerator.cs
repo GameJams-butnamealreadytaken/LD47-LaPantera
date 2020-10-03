@@ -29,6 +29,8 @@ public class MapGenerator : NetworkBehaviour
     public int mapXSize = 20;
     public int mapZSize = 20;
 
+    public int specialObjectsMinDistanceFromSpawn = 200;
+
     public int yHeight = -3;
 
     [Tooltip("Sum of probabilities must be equal to one")] 
@@ -42,7 +44,7 @@ public class MapGenerator : NetworkBehaviour
     {
         MapBiomeToProbabilityRanges();
         GenerateMap();
-        //PlaceSpecialObjects();
+        PlaceSpecialObjects();
     }
 
     // Update is called once per frame
@@ -67,13 +69,13 @@ public class MapGenerator : NetworkBehaviour
 
                 NetworkServer.Spawn(tile);
                 
-                GenerateBiome(tile, biomeToSpawnInfo.biome, new Vector2(currentX, currentZ));
+                GenerateBiome(biomeToSpawnInfo.biome, new Vector2(currentX, currentZ));
             }
         }
     }
 
     [Server]
-    private void GenerateBiome(GameObject tile, Biome biome, Vector2 startPos)
+    private void GenerateBiome(Biome biome, Vector2 startPos)
     {
         Vector2 endPos = new Vector2(startPos.x + tileXScale, startPos.y + tileZScale);
 
@@ -83,13 +85,13 @@ public class MapGenerator : NetworkBehaviour
 
             for (int objectIndex = 0; objectIndex < objectToSpawnCount; ++objectIndex)
             {
-                PlaceObject(tile, objectInfo.objectPrefab, startPos, endPos);
+                PlaceObject(objectInfo.objectPrefab, startPos, endPos);
             }
         }
     }
 
     [Server]
-    private void PlaceObject(GameObject tile, GameObject gameObject, Vector2 startPos, Vector2 endPos)
+    private void PlaceObject(GameObject gameObject, Vector2 startPos, Vector2 endPos)
     {
         Vector3 objectPos = new Vector3();
         objectPos.x = Random.Range(startPos.x, endPos.x);
@@ -97,9 +99,39 @@ public class MapGenerator : NetworkBehaviour
         objectPos.z = Random.Range(startPos.y, endPos.y);
 
         GameObject spawnedObject = Instantiate(gameObject, objectPos, Quaternion.identity);
-        spawnedObject.transform.SetParent(tile.transform);
-        
+        spawnedObject.transform.SetParent(this.transform);
+
         NetworkServer.Spawn(spawnedObject);
+    }
+
+    [Server]
+    private void PlaceSpecialObjects()
+    {
+        int realMapXSize = mapXSize * tileXScale;
+        int realMapZSize = mapZSize * tileZScale;
+        
+        Vector2 middlePoint = new Vector2(realMapXSize / 2.0f, realMapZSize / 2.0f);
+        
+        Vector4[] spawnBoxes = new Vector4[4];
+        spawnBoxes[0] = new Vector4(0, 0, middlePoint.x - specialObjectsMinDistanceFromSpawn, realMapZSize);
+        spawnBoxes[1] = new Vector4(middlePoint.x + specialObjectsMinDistanceFromSpawn, 0, realMapXSize, realMapZSize);
+        spawnBoxes[2] = new Vector4(0, 0, realMapXSize, middlePoint.y - specialObjectsMinDistanceFromSpawn);
+        spawnBoxes[3] = new Vector4(0, middlePoint.y + specialObjectsMinDistanceFromSpawn, realMapXSize, realMapZSize);
+
+        foreach (GameObject specialObject in specialObjects)
+        {
+            Vector4 selectedBox = spawnBoxes[Random.Range(0, 3)];
+            
+            Vector3 objectPos = new Vector3();
+            objectPos.x = Random.Range(selectedBox.x, selectedBox.z);
+            objectPos.y = yHeight;
+            objectPos.z = Random.Range(selectedBox.y, selectedBox.w);
+
+            GameObject spawnedObject = Instantiate(specialObject, objectPos, Quaternion.identity);
+            spawnedObject.transform.SetParent(this.transform);
+            
+            NetworkServer.Spawn(spawnedObject);
+        }
     }
 
     [Server]

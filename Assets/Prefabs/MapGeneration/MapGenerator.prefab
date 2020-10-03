@@ -66,6 +66,7 @@ MonoBehaviour:
   tileZScale: 20
   mapXSize: 20
   mapZSize: 20
+  specialObjectsMinDistanceFromSpawn: 35
   yHeight: -3
   biomeList:
   - biome: {fileID: 7834664173640018586, guid: ee5eeea24a6fa8e41be14202c247e139, type: 3}
@@ -74,3 +75,4 @@ MonoBehaviour:
     spawnProbability: 0.3
   - biome: {fileID: 7834664173640018586, guid: c07c0e6ee6ee2df46ad99d861471fa2c, type: 3}
     spawnProbability: 0.2
+  specialObjects: []

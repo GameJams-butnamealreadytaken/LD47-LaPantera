@@ -286,7 +286,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 3.3256e-41, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -401,7 +401,7 @@ PrefabInstance:
     - target: {fileID: 3584987441630715788, guid: acaee4681b2aa944981540787ba1cad6,
         type: 3}
       propertyPath: spawnPrefabs.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3584987441630715788, guid: acaee4681b2aa944981540787ba1cad6,
         type: 3}
@@ -443,6 +443,12 @@ PrefabInstance:
       propertyPath: spawnPrefabs.Array.data[4]
       value: 
       objectReference: {fileID: 8144252756423551174, guid: 0664c9f872eb2ce49af75498dbd1db6c,
+        type: 3}
+    - target: {fileID: 3584987441630715788, guid: acaee4681b2aa944981540787ba1cad6,
+        type: 3}
+      propertyPath: spawnPrefabs.Array.data[5]
+      value: 
+      objectReference: {fileID: 4487416772883780151, guid: edeb0a2c7637c414f89af6faff6b2885,
         type: 3}
     - target: {fileID: 3737576387049035833, guid: acaee4681b2aa944981540787ba1cad6,
         type: 3}

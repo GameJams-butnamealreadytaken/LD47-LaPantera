@@ -1,4 +1,5 @@
-﻿using Mirror;
+﻿using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -39,6 +40,17 @@ public class PlayerController : NetworkBehaviour
             return;
 
         InputMoveValues = value.Get<Vector2>();
+    }
+
+    [Client]
+    public void OnAction(InputValue value)
+    {
+        InteractableResource[] resources = FindObjectsOfType<InteractableResource>();
+
+        foreach (InteractableResource resource in resources)
+        {
+            resource.CmdGather();
+        }
     }
 
     [Client]

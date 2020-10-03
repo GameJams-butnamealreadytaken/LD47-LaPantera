@@ -14,7 +14,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Attack",
+                    "name": "Action",
                     "type": "Button",
                     "id": "bddd2801-bbc1-4287-b19d-c9dab97c4d87",
                     "expectedControlType": "Button",
@@ -151,7 +151,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMosue",
-                    "action": "Attack",
+                    "action": "Action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -162,7 +162,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Attack",
+                    "action": "Action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

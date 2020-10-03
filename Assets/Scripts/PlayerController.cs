@@ -8,7 +8,6 @@ public class PlayerController : NetworkBehaviour
     public GameObject CharacterModel;
     public CharacterPlayer CharacterPlayer;
 
-    public Camera PlayerCamera;
     public AudioListener PlayerAudioListener;
     public PlayerInput Inputs;
 
@@ -18,7 +17,7 @@ public class PlayerController : NetworkBehaviour
     private Vector2 InputMoveValues;
 
     private bool bWalking = false;
-    private bool bAttacking = false;
+    private bool bInteracting = false;
 
     [Client]
     void Start()
@@ -31,6 +30,8 @@ public class PlayerController : NetworkBehaviour
 
         rb = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
+
+        Camera.main.gameObject.GetComponent<CameraManager>().PlayerTarget = gameObject;
     }
 
     [Client]
@@ -45,12 +46,13 @@ public class PlayerController : NetworkBehaviour
     [Client]
     public void OnAction(InputValue value)
     {
-        InteractableResource[] resources = FindObjectsOfType<InteractableResource>();
-
-        foreach (InteractableResource resource in resources)
+        if (bInteracting)
         {
-            resource.CmdGather();
+            return;
         }
+
+        bInteracting = true;
+        animator.SetBool("Interact", true);
     }
 
     [Client]
@@ -79,12 +81,12 @@ public class PlayerController : NetworkBehaviour
             bWalking = false;
         }
 
-        Vector2 vMiddleScreen = new Vector2(Camera.main.pixelWidth * 0.5f, Camera.main.pixelHeight * 0.5f);
-        Vector2 vMouse = Mouse.current.position.ReadValue();
-
-        float angle = Mathf.Atan2(vMouse.x - vMiddleScreen.x, vMouse.y - vMiddleScreen.y) * Mathf.Rad2Deg;
-
-        rb.rotation = Quaternion.Euler(new Vector3(0.0f, angle, 0.0f));
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Interact") &&
+            animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+        {
+            bInteracting = false;
+            animator.SetBool("Interact", false);
+        }
     }
 
     [Client]
@@ -92,9 +94,6 @@ public class PlayerController : NetworkBehaviour
     {
         if (!hasAuthority || !isLocalPlayer)
         {
-            PlayerCamera.enabled = false;
-            PlayerAudioListener.enabled = false;
-
             Inputs.enabled = false;
 
             return;

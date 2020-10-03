@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
 
 public class PlayerController : NetworkBehaviour
@@ -11,8 +12,15 @@ public class PlayerController : NetworkBehaviour
     public AudioListener PlayerAudioListener;
     public PlayerInput Inputs;
 
+    public GameObject tempAxePrefab;
+
     private Rigidbody rb;
     private Animator animator;
+    
+    private Transform handBone;
+    
+    [SyncVar(hook = nameof(OnEquippedObjectChanged))]
+    private GameObject equippedObject;
 
     private Vector2 InputMoveValues;
 
@@ -20,20 +28,24 @@ public class PlayerController : NetworkBehaviour
     private bool bInteracting = false;
 
     private bool bResetInputs = true;
-
-    [Client]
+    
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
+        animator = GetComponentInChildren<Animator>();
+        
+        handBone = animator.GetBoneTransform(HumanBodyBones.RightHand);
+        Assert.IsNotNull(handBone);
+        
         if (!hasAuthority || !isLocalPlayer)
         {
             Inputs.DeactivateInput();
             return;
         }
 
-        rb = GetComponent<Rigidbody>();
-        animator = GetComponentInChildren<Animator>();
-
         Camera.main.gameObject.GetComponent<CameraManager>().PlayerTarget = gameObject;
+        
+        CmdEquipObject();
     }
 
     [Client]
@@ -56,8 +68,7 @@ public class PlayerController : NetworkBehaviour
         bInteracting = true;
         animator.SetBool("Interact", true);
     }
-
-    [Client]
+    
     void FixedUpdate()
     {
         if (!hasAuthority || !isLocalPlayer)
@@ -120,8 +131,7 @@ public class PlayerController : NetworkBehaviour
             animator.SetBool("Interact", false);
         }
     }
-
-    [Client]
+    
     void Update()
     {
         if (!hasAuthority || !isLocalPlayer)
@@ -141,6 +151,29 @@ public class PlayerController : NetworkBehaviour
                 Inputs.ActivateInput();
                 bResetInputs = false;
             }
+        }
+    }
+
+    [Command]
+    private void CmdEquipObject()
+    {
+        GameObject spawnedObject = Instantiate(tempAxePrefab, handBone.position, handBone.rotation);
+        spawnedObject.transform.SetParent(handBone);
+        
+        NetworkServer.Spawn(spawnedObject);
+
+        equippedObject = spawnedObject;
+    }
+
+    [Client]
+    private void OnEquippedObjectChanged(GameObject oldEquippedObject, GameObject newEquippedObject)
+    {
+        if (!GetComponent<NetworkIdentity>().isServer)
+        {
+            equippedObject.transform.position = handBone.position;
+            equippedObject.transform.rotation = handBone.rotation;
+            equippedObject.transform.localScale = Vector3.one;
+            equippedObject.transform.SetParent(handBone);   
         }
     }
 }

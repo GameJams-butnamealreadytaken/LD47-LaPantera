@@ -6,15 +6,11 @@ using UnityEngine;
 public class PlayerController : NetworkBehaviour
 {
     public float MoveSpeed = 150.0f;
-    public float JumpForce = 20.0f;
-    
-    public LayerMask groundLayer;
 
     private Rigidbody rb;
     private Animator animator;
 
     private bool bWalking = false;
-    private bool bJumping = false;
 
     [Client]
     void Start()
@@ -29,13 +25,6 @@ public class PlayerController : NetworkBehaviour
         if (!hasAuthority)
             return;
 
-        if (!bJumping && Input.GetAxis("Jump") != 0.0f)
-        {
-            rb.AddForce(0.0f, JumpForce, 0.0f);
-            bJumping = true;
-            animator.SetBool("Jumping", true);
-        }
-
         float fHorizontal = Input.GetAxis("Horizontal");
         float fVertical = Input.GetAxis("Vertical");
         if (fHorizontal != 0.0f || fVertical != 0.0f)
@@ -49,15 +38,6 @@ public class PlayerController : NetworkBehaviour
         {
             animator.SetBool("Walking", false);
             bWalking = false;
-        }
-
-        if (bJumping)
-        {
-            if (rb.velocity.y < 0.0f && Physics.CheckSphere(transform.position, 0.1f, groundLayer.value))
-            {
-                bJumping = false;
-                animator.SetBool("Jumping", false);
-            }
         }
     }
 }

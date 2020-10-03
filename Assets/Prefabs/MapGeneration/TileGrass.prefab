@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2583147717972066866}
   - component: {fileID: 305638257600165624}
   - component: {fileID: 4154443623454839642}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 9126239104456566492}
   - component: {fileID: 8116034356907246633}
   - component: {fileID: 7834664173640018586}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TileGrass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -233,6 +233,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Mesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 6908014895675755424, guid: b62b88abde7eb2545b8ae81223030595,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b62b88abde7eb2545b8ae81223030595, type: 3}

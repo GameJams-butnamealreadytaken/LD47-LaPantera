@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 public class MapGenerator : NetworkBehaviour
@@ -33,7 +34,11 @@ public class MapGenerator : NetworkBehaviour
 
     public int yHeight = -3;
 
-    private Vector2 _realSize;
+	[Header("Spawners")]
+	public PlayerManager m_playerManager;
+	public EnemyManager m_enemyManager;
+
+	private Vector2 _realSize;
     private Vector2 _middlePoint;
 
     [Tooltip("Sum of probabilities must be equal to one")] 
@@ -71,8 +76,8 @@ public class MapGenerator : NetworkBehaviour
 
     [Server]
     private void GenerateMap()
-    {
-        for (int currentX = 0; currentX < mapXSize * tileXScale; currentX += tileXScale)
+	{
+		for (int currentX = 0; currentX < mapXSize * tileXScale; currentX += tileXScale)
         {
             for (int currentZ = 0; currentZ < mapZSize * tileZScale; currentZ += tileZScale)
             {
@@ -87,8 +92,20 @@ public class MapGenerator : NetworkBehaviour
                 
                 GenerateBiome(biomeToSpawnInfo.biome, new Vector2(currentX, currentZ));
             }
-        }
-    }
+		}
+
+		NavMeshSurface surface = gameObject.AddComponent<NavMeshSurface>();
+		surface.BuildNavMesh();
+
+		//
+		// Spawn enemies
+		Assert.IsNotNull(m_enemyManager);
+		List<BaseCharacter> enemies = new List<BaseCharacter>();
+		if (m_enemyManager.SpawnCharacters(ECharacterType.enemy_zombie, 10, ref enemies))
+		{
+			Debug.Log("Spawn success");
+		}
+	}
 
     [Server]
     private void GenerateBiome(Biome biome, Vector2 startPos)
@@ -116,6 +133,8 @@ public class MapGenerator : NetworkBehaviour
 
         GameObject spawnedObject = Instantiate(gameObject, objectPos, Quaternion.identity);
         spawnedObject.transform.SetParent(this.transform);
+
+		NavMeshObstacle obstacle = spawnedObject.AddComponent<NavMeshObstacle>();
 
         NetworkServer.Spawn(spawnedObject);
     }

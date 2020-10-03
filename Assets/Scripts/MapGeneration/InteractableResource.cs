@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
@@ -18,9 +19,8 @@ public class InteractableResource : NetworkBehaviour
     {
         
     }
-
-    [Command(ignoreAuthority = true)]
-    public void CmdGather()
+    
+    public void Gather()
     {
         List<GameObject> spawnedObjects = resourceDescriptor.Spawn(this.transform.position, 1);
 
@@ -30,5 +30,22 @@ public class InteractableResource : NetworkBehaviour
         }
         
         Destroy(this.gameObject);
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Weapon"))
+        {
+            Debug.Log("YES IT IS ");
+        }
+        
+        Item item = other.gameObject.GetComponent<Item>();
+
+        if (item == null)
+        {
+            return;
+        }
+        
+        Gather();
     }
 }

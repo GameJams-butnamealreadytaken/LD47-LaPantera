@@ -52,12 +52,16 @@ namespace ScriptableObjects
 		/// <returns>The icon of this blueprint. If the blueprint has no icon, the icon is the one of the produced item</returns>
 		public Sprite GetIcon()
 		{
+			//
+			// If the icon is null
 			if (null == m_icon)
 			{
+				// We return the icon of the produced item
 				return m_produced.m_icon;
 			}
 			else
 			{
+				// We return the icon of the blueprint
 				return m_icon;
 			}
 		}

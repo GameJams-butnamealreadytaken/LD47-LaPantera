@@ -69,11 +69,41 @@ public class PlayerController : NetworkBehaviour
         {
             float fSpeed = CharacterPlayer.GetCurrentSpeed() * Time.deltaTime;
 
-            //Vector3 vForward = CharacterModel.transform.forward * fVertical * fSpeed;
-            //Vector3 vRight = CharacterModel.transform.right * fHorizontal * fSpeed;
-            //rb.velocity = new Vector3(vForward.x + vRight.x, rb.velocity.y, vForward.z + vRight.z);
-
             rb.velocity = new Vector3(fHorizontal * fSpeed, rb.velocity.y, fVertical * fSpeed);
+            Debug.Log(InputMoveValues);
+            float fAngle = 0.0f;
+            if (fHorizontal >= 0.7f)
+            {
+                fAngle = 90.0f;
+                if (fVertical >= 0.7f)
+                {
+                    fAngle -= 45.0f;
+                }
+                else if (fVertical <= -0.7f)
+                {
+                    fAngle += 45.0f;
+                }
+            }
+            else if (fHorizontal <= -0.7f)
+            {
+                fAngle = -90.0f;
+                if (fVertical >= 0.7f)
+                {
+                    fAngle += 45.0f;
+                }
+                else if (fVertical <= -0.7f)
+                {
+                    fAngle -= 45.0f;
+                }
+            }
+            else if(fVertical == -1.0f)
+            {
+                fAngle = -180.0f;
+            }
+
+            Quaternion rota = Quaternion.identity;
+            transform.rotation = Quaternion.Euler(0.0f, fAngle, 0.0f);
+
             bWalking = true;
             animator.SetBool("Walking", true);
         }

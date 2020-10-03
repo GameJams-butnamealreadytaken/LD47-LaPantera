@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 8258865356572460678}
   - component: {fileID: 6159117797878723148}
   - component: {fileID: 790818157400040143}
+  - component: {fileID: 6960730583900986684}
   m_Layer: 0
-  m_Name: tree_pineDefaultB
+  m_Name: GameObjectTreePine01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97,3 +98,16 @@ MonoBehaviour:
   serverOnly: 0
   m_AssetId: 
   hasSpawned: 0
+--- !u!114 &6960730583900986684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5654666741443679129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72af00a8c46054b40b5a25b1d00407ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resourceDescriptor: {fileID: 11400000, guid: 1bd46e9c6500aa841bf60cf7ef19c0bf, type: 2}

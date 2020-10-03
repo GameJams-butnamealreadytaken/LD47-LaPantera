@@ -4,6 +4,7 @@
  *  Description : Base item scriptable object
  **/
 
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -51,11 +52,13 @@ namespace ScriptableObjects
 		/// </summary>
 		/// <param name="_position">The position to spawn at. There is a small delta that is applied</param>
 		/// <param name="_amount">The amount of items to spawn</param>
-		public void Spawn(Vector3 _position, int _amount = 1)
+		public List<GameObject> Spawn(Vector3 _position, int _amount = 1)
 		{
 			//
 			// Ensure the prefab is not null, otherwise we assert
 			Assert.IsNotNull(m_prefab, "Tried to spawn an item that has a null prefab (" + m_name + ")");
+			
+			List<GameObject> spawnedObjects = new List<GameObject>();
 			
 			//
 			// We instantiate the prefab
@@ -69,10 +72,12 @@ namespace ScriptableObjects
 					// Spawn an object by randomizing the x and z 
 					float xDelta = Random.Range(-0.4f, 0.4f);
 					float zDelta = Random.Range(-0.4f, 0.4f);
-					GameObject.Instantiate(m_prefab,
-						new Vector3(_position.x + xDelta, _position.y + 0.2f, _position.z + zDelta), Quaternion.identity);
+					spawnedObjects.Add(GameObject.Instantiate(m_prefab,
+								new Vector3(_position.x + xDelta, _position.y + 0.2f, _position.z + zDelta), Quaternion.identity));
 				}
 			}
+
+			return spawnedObjects;
 		}
 
 #endregion 

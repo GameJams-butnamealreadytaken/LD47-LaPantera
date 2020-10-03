@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_name: Hammer
   m_description: A hammer that can break rocks easily
+  m_type: 2
   m_icon: {fileID: 21300000, guid: b931587800e08c54aa8dbbd6c15c894f, type: 3}
   m_prefab: {fileID: 0}

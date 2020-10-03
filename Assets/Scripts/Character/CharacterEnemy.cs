@@ -32,13 +32,13 @@ public class CharacterEnemy : BaseCharacter
 	}
 #endif // UNITY_EDITOR
 
-	private void FixedUpdate()
-	{
-		m_agent.SetDestination(new Vector3(45.0f, 0.0f, -17.0f));
-		m_agent.isStopped = false;
-	}
+	//private void FixedUpdate()
+	//{
+	//	//m_agent.SetDestination(new Vector3(45.0f, 0.0f, -17.0f));
+	//	//m_agent.isStopped = false;
+	//}
 
-	private void Update()
-	{
-	}
+	//private void Update()
+	//{
+	//}
 }

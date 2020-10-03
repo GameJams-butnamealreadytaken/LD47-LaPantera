@@ -11,7 +11,7 @@ public class MapGenerator : NetworkBehaviour
     [Serializable]
     public class BiomeInfo
     {
-        public GameObject tilePrefab;
+        public Biome biome;
         
         [Range(0.0f, 1.0f)]
         public float spawnProbability;
@@ -29,8 +29,9 @@ public class MapGenerator : NetworkBehaviour
     public int mapXSize = 20;
     public int mapZSize = 20;
 
-    public int zHeight = -3;
+    public int yHeight = -3;
 
+    [Tooltip("Sum of probabilities must be equal to one")] 
     public List<BiomeInfo> biomeList; 
     
     // Start is called before the first frame update
@@ -53,12 +54,44 @@ public class MapGenerator : NetworkBehaviour
         {
             for (int currentZ = 0; currentZ < mapZSize * tileZScale; currentZ += tileZScale)
             {
-                GameObject tile = Instantiate(GetRandomBiomeInfo().tilePrefab, new Vector3(currentX, zHeight, currentZ), Quaternion.identity);
+                BiomeInfo biomeToSpawnInfo = GetRandomBiomeInfo();
+                
+                GameObject tile = Instantiate(biomeToSpawnInfo.biome.gameObject, new Vector3(currentX, yHeight, currentZ), Quaternion.identity);
                 tile.transform.localScale = new Vector3(tileXScale, 1, tileZScale);
                 
                 NetworkServer.Spawn(tile);
+                
+                GenerateBiome(biomeToSpawnInfo.biome, new Vector2(currentX, currentZ));
             }
         }
+    }
+
+    [Server]
+    private void GenerateBiome(Biome biome, Vector2 startPos)
+    {
+        Vector2 endPos = new Vector2(startPos.x + tileXScale, startPos.y + tileZScale);
+
+        foreach (Biome.ObjectInfo objectInfo in biome.objectList)
+        {
+            int objectToSpawnCount = Random.Range(objectInfo.spawnMinCount, objectInfo.spawnMaxCount);
+
+            for (int objectIndex = 0; objectIndex < objectToSpawnCount; ++objectIndex)
+            {
+                PlaceObject(objectInfo.objectPrefab, startPos, endPos);
+            }
+        }
+    }
+
+    [Server]
+    private void PlaceObject(GameObject gameObject, Vector2 startPos, Vector2 endPos)
+    {
+        Vector3 objectPos = new Vector3();
+        objectPos.x = Random.Range(startPos.x, endPos.x);
+        objectPos.y = yHeight;
+        objectPos.z = Random.Range(startPos.y, endPos.y);
+
+        GameObject spawnedObject = Instantiate(gameObject, objectPos, Quaternion.identity);
+        NetworkServer.Spawn(spawnedObject);
     }
 
     [Server]

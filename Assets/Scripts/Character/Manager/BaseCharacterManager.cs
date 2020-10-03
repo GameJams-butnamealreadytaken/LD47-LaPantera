@@ -18,7 +18,7 @@ public abstract class BaseCharacterManager : NetworkBehaviour
 	]
 	public GameObject[] m_mapCharacterToPrefab = new GameObject[System.Enum.GetNames(typeof(ECharacterType)).Length];
 
-	private List<BaseCharacter> m_aCharacters = new List<BaseCharacter>();
+	protected List<BaseCharacter> m_aCharacters = new List<BaseCharacter>();
 
 	[Server]
 	protected bool GetSpawnParameters(ref Vector3 vPosition, ref Quaternion qOrn)
@@ -47,8 +47,6 @@ public abstract class BaseCharacterManager : NetworkBehaviour
 
 		for(int iCharacterIndex = 0; iCharacterIndex < iCharactersCount; ++iCharacterIndex)
 		{
-			BaseCharacter character = new BaseCharacter();
-
 			//
 			// Retrieve transform to random spawn location
 			Vector3 vPosition = new Vector3();
@@ -68,7 +66,7 @@ public abstract class BaseCharacterManager : NetworkBehaviour
 			}
 			
 			GameObject newCharacterObject = Instantiate(prefab, vPosition, qOrn);
-			character = newCharacterObject.GetComponent<CharacterEnemy>();
+			BaseCharacter character = newCharacterObject.GetComponent<CharacterEnemy>();
 			character.m_characterManager = this;
 
 			//
@@ -77,7 +75,7 @@ public abstract class BaseCharacterManager : NetworkBehaviour
 
 			//
 			// Spawn character on server
-			NetworkServer.Spawn(character.gameObject);
+			NetworkServer.Spawn(newCharacterObject);
 
 			//
 			// Add character to list

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Mirror;
+﻿using Mirror;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -24,25 +22,29 @@ public class PlayerController : NetworkBehaviour
     [Client]
     void Start()
     {
-        if (!hasAuthority)
+        if (!hasAuthority || !isLocalPlayer)
+        {
+            //Inputs.DeactivateInput();
             return;
+        }
 
         rb = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
-        Inputs.defaultControlScheme = "KeyboardMosue";
-        Inputs.defaultActionMap = "Gameplay";
     }
 
     [Client]
     public void OnMove(InputValue value)
     {
+        if (!hasAuthority || !isLocalPlayer)
+            return;
+
         InputMoveValues = value.Get<Vector2>();
     }
 
     [Client]
     void FixedUpdate()
     {
-        if (!hasAuthority)
+        if (!hasAuthority || !isLocalPlayer)
             return;
 
         float fHorizontal = InputMoveValues.x;
@@ -64,24 +66,32 @@ public class PlayerController : NetworkBehaviour
             animator.SetBool("Walking", false);
             bWalking = false;
         }
-    }
-
-    [Client]
-    // Update is called once per frame
-    void Update()
-    {
-        if (!hasAuthority)
-        {
-            PlayerCamera.enabled = false;
-            PlayerAudioListener.enabled = false;
-            return;
-        }
 
         Vector2 vMiddleScreen = new Vector2(Camera.main.pixelWidth * 0.5f, Camera.main.pixelHeight * 0.5f);
         Vector2 vMouse = Mouse.current.position.ReadValue();
 
         float angle = Mathf.Atan2(vMouse.x - vMiddleScreen.x, vMouse.y - vMiddleScreen.y) * Mathf.Rad2Deg;
 
-        CharacterModel.transform.rotation = Quaternion.Euler(new Vector3(0.0f, angle, 0.0f));
+        rb.rotation = Quaternion.Euler(new Vector3(0.0f, angle, 0.0f));
+    }
+
+    [Client]
+    void Update()
+    {
+        if (!hasAuthority || !isLocalPlayer)
+        {
+            PlayerCamera.enabled = false;
+            PlayerAudioListener.enabled = false;
+
+            Inputs.enabled = false;
+
+            return;
+        }
+        else
+        {
+            //Inputs.SwitchCurrentActionMap(Inputs.defaultActionMap);
+            Inputs.SwitchCurrentControlScheme(Inputs.defaultControlScheme);
+            Inputs.ActivateInput();
+        }
     }
 }

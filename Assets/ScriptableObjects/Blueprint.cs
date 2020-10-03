@@ -6,6 +6,7 @@
 
 using System;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace ScriptableObjects
 {
@@ -27,26 +28,49 @@ namespace ScriptableObjects
 		}
 	
 		[Header("General")] 
+		[SerializeField]
 		[Tooltip("The name of the blueprint")]
-		public string m_name;
-	
+		private string m_name;
+		/// <summary>
+		/// The description of this blueprint, we simply return the description of the produced item
+		/// </summary>
+		public string Description
+		{
+			get
+			{
+				Assert.IsNotNull(m_produced, "Trying to get the description of a blueprint that has no prorduced item (" + name + ")");
+				return m_produced.m_description;
+			}
+		}
+
+		[SerializeField]
+		[Tooltip("Is this blueprint available from the beginning or is it locked (something to do to discover it)")]
+		private bool m_availableAtStart = true;
+		public bool StartLocked
+		{
+			get { return !m_availableAtStart;  }
+		}
+
 		[Header("Visual")]
+		[SerializeField]
 		[Tooltip("The icon of the blueprint. If nothing is set, the sprite used is the one of the produced item")]
-		public Sprite m_icon;
+		private Sprite m_icon;
 	
 		[Header("Recipe")] 
+		[SerializeField]
 		[Tooltip("The elements needed for the recipe")]
-		public RecipeElement[] m_recipeElements;
+		private RecipeElement[] m_recipeElements;
 	
 		[Header("Product")] 
+		[SerializeField]
 		[Tooltip("The produced item")]
-		public Item m_produced;
+		private Item m_produced;
 	
 	#endregion
-	
+
 	#region Methods
-	
-		/// <summary>
+
+	/// <summary>
 		/// Return the icon of this blueprint
 		/// </summary>
 		/// <returns>The icon of this blueprint. If the blueprint has no icon, the icon is the one of the produced item</returns>

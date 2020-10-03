@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : NetworkBehaviour
 {
+    public GameObject CharacterModel;
     public float MoveSpeed = 150.0f;
 
     private Rigidbody rb;
@@ -19,7 +20,7 @@ public class PlayerController : NetworkBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     [Client]
@@ -39,7 +40,9 @@ public class PlayerController : NetworkBehaviour
         if (fHorizontal != 0.0f || fVertical != 0.0f)
         {
             float fSpeed = MoveSpeed * Time.deltaTime;
-            rb.velocity = new Vector3(fHorizontal * fSpeed, rb.velocity.y, fVertical * fSpeed);
+            Vector3 vForward = CharacterModel.transform.forward * fVertical * fSpeed;
+            Vector3 vRight = CharacterModel.transform.right * fHorizontal * fSpeed;
+            rb.velocity = new Vector3(vForward.x + vRight.x, rb.velocity.y, vForward.z + vRight.z);
             bWalking = true;
             animator.SetBool("Walking", true);
         }
@@ -49,5 +52,15 @@ public class PlayerController : NetworkBehaviour
             bWalking = false;
         }
     }
-}
 
+    // Update is called once per frame
+    void Update()
+    {
+        Vector2 vMiddleScreen = new Vector2(Camera.main.pixelWidth * 0.5f, Camera.main.pixelHeight * 0.5f);
+        Vector2 vMouse = Mouse.current.position.ReadValue();
+
+        float angle = Mathf.Atan2(vMouse.x - vMiddleScreen.x, vMouse.y - vMiddleScreen.y) * Mathf.Rad2Deg;
+
+        CharacterModel.transform.rotation = Quaternion.Euler(new Vector3(0.0f, angle, 0.0f));
+    }
+}

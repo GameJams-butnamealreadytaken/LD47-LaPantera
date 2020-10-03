@@ -81,7 +81,7 @@ public class PlayerController : NetworkBehaviour
             float fSpeed = CharacterPlayer.GetCurrentSpeed() * Time.deltaTime;
 
             rb.velocity = new Vector3(fHorizontal * fSpeed, rb.velocity.y, fVertical * fSpeed);
-            Debug.Log(InputMoveValues);
+
             float fAngle = 0.0f;
             if (fHorizontal >= 0.7f)
             {

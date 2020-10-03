@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : NetworkBehaviour
 {
@@ -9,6 +10,8 @@ public class PlayerController : NetworkBehaviour
 
     private Rigidbody rb;
     private Animator animator;
+
+    private Vector2 InputMoveValues;
 
     private bool bWalking = false;
 
@@ -20,13 +23,19 @@ public class PlayerController : NetworkBehaviour
     }
 
     [Client]
+    public void OnMove(InputValue value)
+    {
+        InputMoveValues = value.Get<Vector2>();
+    }
+
+    [Client]
     void FixedUpdate()
     {
         if (!hasAuthority)
             return;
 
-        float fHorizontal = Input.GetAxis("Horizontal");
-        float fVertical = Input.GetAxis("Vertical");
+        float fHorizontal = InputMoveValues.x;
+        float fVertical = InputMoveValues.y;
         if (fHorizontal != 0.0f || fVertical != 0.0f)
         {
             float fSpeed = MoveSpeed * Time.deltaTime;
@@ -41,3 +50,4 @@ public class PlayerController : NetworkBehaviour
         }
     }
 }
+

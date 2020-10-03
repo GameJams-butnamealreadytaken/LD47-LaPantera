@@ -49,5 +49,15 @@ public class PlayerController : NetworkBehaviour
             bWalking = false;
         }
     }
-}
 
+    // Update is called once per frame
+    void Update()
+    {
+        Vector2 vMiddleScreen = new Vector2(Camera.main.pixelWidth * 0.5f, Camera.main.pixelHeight * 0.5f);
+        Vector2 vMouse = Mouse.current.position.ReadValue();
+
+        float angle = Mathf.Atan2(vMouse.x - vMiddleScreen.x, vMouse.y - vMiddleScreen.y) * Mathf.Rad2Deg;
+
+        transform.rotation = Quaternion.Euler(new Vector3(0.0f, angle - 90.0f, 0.0f));
+    }
+}

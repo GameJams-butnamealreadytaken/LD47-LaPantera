@@ -63,10 +63,14 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   tileXScale: 20
-  tileYScale: 20
+  tileZScale: 20
   mapXSize: 20
-  mapYSize: 20
+  mapZSize: 20
+  zHeight: -3
   biomeList:
   - tilePrefab: {fileID: 2314523835135545913, guid: 54217b2394af9524196f8f72c5a7114b,
       type: 3}
-    spawnProbability: 1
+    spawnProbability: 0.7
+  - tilePrefab: {fileID: 8790434196833910809, guid: 0ed642ad04b324441b19b9cffa8b0f8d,
+      type: 3}
+    spawnProbability: 0.3

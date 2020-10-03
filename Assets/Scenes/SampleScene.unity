@@ -269,7 +269,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 1.9478e-41, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -396,7 +396,7 @@ PrefabInstance:
         type: 3}
       propertyPath: playerPrefab
       value: 
-      objectReference: {fileID: 3663380126179383916, guid: c7185b9c3153d464b9645f8d2a308d8b,
+      objectReference: {fileID: 3137835343163833458, guid: 072cc0fc6dbf62e40868aadfd861b5ea,
         type: 3}
     - target: {fileID: 3737576387049035833, guid: acaee4681b2aa944981540787ba1cad6,
         type: 3}

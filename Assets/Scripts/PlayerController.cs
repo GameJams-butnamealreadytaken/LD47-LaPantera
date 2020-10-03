@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : NetworkBehaviour
 {
     public float MoveSpeed = 150.0f;
-    public float JumpForce = 20.0f;
-    
-    public LayerMask groundLayer;
 
     private Rigidbody rb;
     private Animator animator;
 
+    private Vector2 InputMoveValues;
+
     private bool bWalking = false;
-    private bool bJumping = false;
 
     [Client]
     void Start()
@@ -24,20 +23,19 @@ public class PlayerController : NetworkBehaviour
     }
 
     [Client]
+    public void OnMove(InputValue value)
+    {
+        InputMoveValues = value.Get<Vector2>();
+    }
+
+    [Client]
     void FixedUpdate()
     {
         if (!hasAuthority)
             return;
 
-        if (!bJumping && Input.GetAxis("Jump") != 0.0f)
-        {
-            rb.AddForce(0.0f, JumpForce, 0.0f);
-            bJumping = true;
-            animator.SetBool("Jumping", true);
-        }
-
-        float fHorizontal = Input.GetAxis("Horizontal");
-        float fVertical = Input.GetAxis("Vertical");
+        float fHorizontal = InputMoveValues.x;
+        float fVertical = InputMoveValues.y;
         if (fHorizontal != 0.0f || fVertical != 0.0f)
         {
             float fSpeed = MoveSpeed * Time.deltaTime;
@@ -50,14 +48,6 @@ public class PlayerController : NetworkBehaviour
             animator.SetBool("Walking", false);
             bWalking = false;
         }
-
-        if (bJumping)
-        {
-            if (rb.velocity.y < 0.0f && Physics.CheckSphere(transform.position, 0.1f, groundLayer.value))
-            {
-                bJumping = false;
-                animator.SetBool("Jumping", false);
-            }
-        }
     }
 }
+

@@ -40,7 +40,9 @@ public class PlayerController : NetworkBehaviour
         if (fHorizontal != 0.0f || fVertical != 0.0f)
         {
             float fSpeed = MoveSpeed * Time.deltaTime;
-            rb.velocity = new Vector3(fHorizontal * fSpeed, rb.velocity.y, fVertical * fSpeed);
+            Vector3 vForward = CharacterModel.transform.forward * fVertical * fSpeed;
+            Vector3 vRight = CharacterModel.transform.right * fHorizontal * fSpeed;
+            rb.velocity = new Vector3(vForward.x + vRight.x, rb.velocity.y, vForward.z + vRight.z);
             bWalking = true;
             animator.SetBool("Walking", true);
         }

@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : NetworkBehaviour
 {
+    public GameObject CharacterModel;
     public float MoveSpeed = 150.0f;
 
     private Rigidbody rb;
@@ -18,8 +19,8 @@ public class PlayerController : NetworkBehaviour
     [Client]
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        animator = GetComponent<Animator>();
+        rb = GetComponentInChildren<Rigidbody>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     [Client]
@@ -58,6 +59,6 @@ public class PlayerController : NetworkBehaviour
 
         float angle = Mathf.Atan2(vMouse.x - vMiddleScreen.x, vMouse.y - vMiddleScreen.y) * Mathf.Rad2Deg;
 
-        transform.rotation = Quaternion.Euler(new Vector3(0.0f, angle - 90.0f, 0.0f));
+        CharacterModel.transform.rotation = Quaternion.Euler(new Vector3(0.0f, angle, 0.0f));
     }
 }

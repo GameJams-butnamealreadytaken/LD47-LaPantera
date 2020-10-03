@@ -16,10 +16,10 @@ public class BaseCharacter : NetworkBehaviour
 	public BaseCharacterManager m_characterManager;
 
 	[Header("Characteristics")]
-	public int m_iSpeed = 10;
 	public int m_iMaxHP = 5;
-	public int m_iAttackStrength = 1;
-	public int m_iAttackRange = 3;
+	public int m_fSpeed = 10;
+	public int m_fAttackStrength = 1;
+	public int m_fAttackRange = 3;
 
 	[Header("Loot")]
 	public int m_iLootCountMin = 1;
@@ -30,11 +30,11 @@ public class BaseCharacter : NetworkBehaviour
 	[SyncVar]
 	private int m_iCurrentHP;
 	[SyncVar]
-	private int m_iCurrentSpeed;
+	private float m_fCurrentSpeed;
 	[SyncVar]
-	private int m_iCurrentAttackStrength;
+	private float m_fCurrentAttackStrength;
 	[SyncVar]
-	private int m_iCurrentAttackRange;
+	private float m_fCurrentAttackRange;
 	[SyncVar]
 	private string m_strName;
 
@@ -50,9 +50,9 @@ public class BaseCharacter : NetworkBehaviour
 		//
 		// Current characteristic = initial characteristic
 		m_iCurrentHP = m_iMaxHP;
-		m_iCurrentSpeed = m_iSpeed;
-		m_iCurrentAttackStrength = m_iAttackStrength;
-		m_iCurrentAttackRange = m_iAttackRange;
+		m_fCurrentSpeed = m_fSpeed;
+		m_fCurrentAttackStrength = m_fAttackStrength;
+		m_fCurrentAttackRange = m_fAttackRange;
 	}
 
 	[Server]
@@ -74,5 +74,25 @@ public class BaseCharacter : NetworkBehaviour
 		{
 			OnCharacterDeath();
 		}
+	}
+	
+	public int GetCurrentHP()
+	{
+		return m_iCurrentHP;
+	}
+	
+	public float GetCurrentSpeed()
+	{
+		return m_fCurrentSpeed;
+	}
+	
+	public float GetCurrentAttackStrength()
+	{
+		return m_fCurrentAttackStrength;
+	}
+	
+	public float GetCurrentAttackRange()
+	{
+		return m_fCurrentAttackRange;
 	}
 }

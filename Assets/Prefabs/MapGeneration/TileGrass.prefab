@@ -162,7 +162,11 @@ MonoBehaviour:
   - objectPrefab: {fileID: 5654666741443679129, guid: 2a46efc6e429019469bc50b8471fcf36,
       type: 3}
     spawnMinCount: 0
-    spawnMaxCount: 30
+    spawnMaxCount: 15
+  - objectPrefab: {fileID: 8144252756423551174, guid: 0664c9f872eb2ce49af75498dbd1db6c,
+      type: 3}
+    spawnMinCount: 0
+    spawnMaxCount: 15
 --- !u!1001 &4675606000465943693
 PrefabInstance:
   m_ObjectHideFlags: 0

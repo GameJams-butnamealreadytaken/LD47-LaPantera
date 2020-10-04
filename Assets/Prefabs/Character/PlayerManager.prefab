@@ -64,8 +64,8 @@ MonoBehaviour:
   syncInterval: 0.1
   m_strName: PlayerManager
   m_aSpawnLocations:
-  - {x: 0, y: 0}
-  m_fSpawnRadius: 5
+  - {x: 200, y: 200}
+  m_fSpawnRadius: 15
   m_mapCharacterToPrefab:
   - {fileID: 0}
   - {fileID: 8572773432784716508, guid: 6bf0268856248b54eb4478e552b496c8, type: 3}

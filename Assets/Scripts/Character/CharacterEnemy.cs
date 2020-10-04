@@ -104,7 +104,10 @@ public class CharacterEnemy : BaseCharacter
 		//
 		// Only server below
 
-
+		if (m_eStatusToProcess == Status.dead && m_eStatus == Status.dead)
+		{
+			return;
+		}
 
 		//
 		// First handle custom SetStatus (Idle->Walking, Walking->Idle, Dying->Death)
@@ -135,6 +138,10 @@ public class CharacterEnemy : BaseCharacter
 			else if(Status.dying == m_eStatus && m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
 			{
 				SetStatus(Status.dead);
+			}
+			else if(Status.dead == m_eStatusToProcess)
+			{
+				OnCharacterDeath();
 			}
 		}
 		else
@@ -183,11 +190,6 @@ public class CharacterEnemy : BaseCharacter
 					m_characterAggroed.TakeDamage(m_fCurrentAttackStrength);
 				}
 			}
-			else
-			{
-				SetAggroedCharacter(null);
-				SetStatus(Status.idle);
-			}
 		}
 		else 
 		{
@@ -221,6 +223,7 @@ public class CharacterEnemy : BaseCharacter
 		return m_characterAggroed;
 	}
 
+	[Server]
 	public void SetAggroedCharacter(BaseCharacter character)
 	{
 		m_characterAggroed = character;
@@ -238,5 +241,16 @@ public class CharacterEnemy : BaseCharacter
 		fDistance = Vector3.Distance(character.gameObject.transform.position, transform.position);
 
 		return fDistance <= m_fAggroRadius;
+	}
+
+
+	[Server]
+	protected override void OnCharacterDying()
+	{
+		base.OnCharacterDying();
+
+		//
+		// Notify
+		((EnemyManager)(m_characterManager)).OnEnemyDying(this);
 	}
 }

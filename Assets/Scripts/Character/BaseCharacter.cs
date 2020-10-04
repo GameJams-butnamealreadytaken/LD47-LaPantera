@@ -59,24 +59,28 @@ public class BaseCharacter : NetworkBehaviour
 	}
 
 	[Server]
-	protected virtual void OnCharacterDeath() 
+	protected virtual void OnCharacterDying()
 	{
 		// 
 		// Drop item
 		DropItem();
+	}
 
+	[Server]
+	protected virtual void OnCharacterDeath() 
+	{
 		//
 		// Call associated manager for destruction
 		m_characterManager.DestroyCharacter(this);
 	}
 
-	[Command]
+	[Server]
 	public void TakeDamage(float fDamage)
 	{
 		m_fCurrentHP = Mathf.Max(m_fCurrentHP - fDamage, 0.0f);
 		if(m_fCurrentHP <= 0.0f)
 		{
-			OnCharacterDeath();
+			OnCharacterDying();
 		}
 	}
 

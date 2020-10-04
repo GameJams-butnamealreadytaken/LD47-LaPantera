@@ -43,32 +43,41 @@ public class EnemyManager : BaseCharacterManager
 			BaseCharacter aggroedCharacter = enemy.GetAggroedCharacter();
 			if (null != aggroedCharacter)
 			{
-				float fDistance = 0.0f;
-				if (enemy.ResolveAggroDetection(aggroedCharacter, ref fDistance))
+				if(aggroedCharacter.GetCurrentHP() > 0.0f)
 				{
-					if (fDistance < enemy.GetCurrentAttackRange())
+					float fDistance = 0.0f;
+					if (enemy.ResolveAggroDetection(aggroedCharacter, ref fDistance))
 					{
-						if (enemy.GetStatus() != CharacterEnemy.Status.attacking)
+						if (fDistance < enemy.GetCurrentAttackRange())
 						{
-							enemy.SetStatus(CharacterEnemy.Status.attacking);
+							if (enemy.GetStatus() != CharacterEnemy.Status.attacking)
+							{
+								enemy.SetStatus(CharacterEnemy.Status.attacking);
+							}
+						}
+						else
+						{
+							if (enemy.GetStatus() != CharacterEnemy.Status.tracking)
+							{
+								enemy.SetStatus(CharacterEnemy.Status.tracking);
+							}
 						}
 					}
 					else
 					{
-						if (enemy.GetStatus() != CharacterEnemy.Status.tracking)
+						enemy.SetAggroedCharacter(null);
+						if (enemy.GetStatus() != CharacterEnemy.Status.idle || enemy.GetStatus() != CharacterEnemy.Status.walking)
 						{
-							enemy.SetStatus(CharacterEnemy.Status.tracking);
+							enemy.SetStatus(CharacterEnemy.Status.idle);
+							aEnemiesTemp.Add(enemy);
 						}
 					}
 				}
 				else
 				{
 					enemy.SetAggroedCharacter(null);
-					if (enemy.GetStatus() != CharacterEnemy.Status.idle || enemy.GetStatus() != CharacterEnemy.Status.walking)
-					{
-						enemy.SetStatus(CharacterEnemy.Status.idle);
-						aEnemiesTemp.Add(enemy);
-					}
+					enemy.SetStatus(CharacterEnemy.Status.idle);
+					aEnemiesTemp.Add(enemy);
 				}
 			}
 		}
@@ -164,5 +173,11 @@ public class EnemyManager : BaseCharacterManager
 			}
 			break;
 		}
+	}
+
+	public void OnEnemyDying(CharacterEnemy enemy)
+	{
+		m_aEnemiesAggroed.Remove(enemy);
+		m_aEnemiesNotAggroed.Remove(enemy);
 	}
 }

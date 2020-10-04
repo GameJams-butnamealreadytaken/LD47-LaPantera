@@ -26,10 +26,17 @@ public class CharacterPlayer : BaseCharacter
 
 
 	[Server]
+	protected override void OnCharacterDying()
+	{
+		base.OnCharacterDying();
+
+		//
+		// Notify
+		((PlayerManager)(m_characterManager)).OnPlayerDying(this);
+	}
+
+	[Server]
 	protected override void OnCharacterDeath()
 	{
-		//
-		// Drop item
-		DropItem();
+		// todo ghost cam
 	}
-}

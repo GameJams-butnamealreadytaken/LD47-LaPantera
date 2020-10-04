@@ -31,7 +31,7 @@ public class PlayerManager : BaseCharacterManager
 		return m_aPlayersDead;
 	}
 
-	public void OnPlayerDeath(CharacterPlayer player)
+	public void OnPlayerDying(CharacterPlayer player)
 	{
 		m_aPlayersAlive.Remove(player);
 		m_aPlayersDead.Add(player);

@@ -183,6 +183,8 @@ public class PlayerController : NetworkBehaviour
     {
         if (!GetComponent<NetworkIdentity>().isServer && equippedObject != null)
         {
+	        equippedObject.transform.SetParent(null);
+	        
             equippedObject.transform.position = handBone.position;
             equippedObject.transform.rotation = handBone.rotation;
             equippedObject.transform.localScale = Vector3.one;

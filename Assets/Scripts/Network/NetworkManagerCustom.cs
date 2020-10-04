@@ -11,7 +11,6 @@ public class NetworkManagerCustom : NetworkManager
 
 	public override void OnServerAddPlayer(NetworkConnection conn)
 	{
-		Debug.Log("--------> spawn player ");
 		List<BaseCharacter> aCharacters = new List<BaseCharacter>();
 		if(m_PlayerManager.SpawnCharacters(ECharacterType.player, 1, false, ref aCharacters))
 		{

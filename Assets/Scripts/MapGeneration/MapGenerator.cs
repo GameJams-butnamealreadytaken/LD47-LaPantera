@@ -51,17 +51,11 @@ public class MapGenerator : NetworkBehaviour
     void Start()
     {
         _realSize = new Vector2(mapXSize * tileXScale, mapZSize * tileZScale);
-        _middlePoint = _realSize / 2.0f;
+        _middlePoint = _realSize * 0.5f;
         
         MapBiomeToProbabilityRanges();
         GenerateMap();
         PlaceSpecialObjects();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public Vector2 GetRealSize()

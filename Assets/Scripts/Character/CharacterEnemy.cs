@@ -9,12 +9,12 @@ public class CharacterEnemy : BaseCharacter
 {
 	public enum Status
 	{
-		idle,
-		walking,
-		tracking,
-		attacking,
-		dying,
-		dead,
+		idle = 0,
+		walking = 1,
+		tracking = 2,
+		attacking = 3,
+		dying = 4,
+		dead = 5,
 	}
 
 	private string[] m_astrStatusString = new string[System.Enum.GetNames(typeof(Status)).Length];
@@ -105,8 +105,6 @@ public class CharacterEnemy : BaseCharacter
 		// Only server below
 
 
-		m_agent.speed = GetCurrentSpeed();
-		m_agent.angularSpeed = GetCurrentSpeed();
 
 		//
 		// First handle custom SetStatus (Idle->Walking, Walking->Idle, Dying->Death)
@@ -164,12 +162,16 @@ public class CharacterEnemy : BaseCharacter
 			m_agent.velocity = m_vDirection * GetCurrentSpeed();
 
 		} // Tracking
-		else if(Status.tracking == m_eStatusToProcess || Status.tracking == m_eStatus)
+		else if(Status.tracking == m_eStatusToProcess)
 		{
 			m_agent.isStopped = false;
 
 			m_vDirection = (m_characterAggroed.gameObject.transform.position - transform.position).normalized;
+			transform.rotation = Quaternion.FromToRotation(Vector3.forward, m_vDirection);
 			m_agent.SetDestination(m_characterAggroed.gameObject.transform.position);
+
+			m_agent.speed = GetCurrentSpeed() * 3.0f;
+			m_agent.angularSpeed = GetCurrentSpeed() * 3.0f;
 		}
 		else 
 		{
@@ -201,6 +203,15 @@ public class CharacterEnemy : BaseCharacter
 	public BaseCharacter GetAggroedCharacter()
 	{
 		return m_characterAggroed;
+	}
+
+	public void SetAggroedCharacter(BaseCharacter character)
+	{
+		m_characterAggroed = character;
+		if(null == m_characterAggroed)
+		{
+			m_agent.ResetPath();
+		}
 	}
 
 	public bool ResolveAggroDetection(BaseCharacter character, ref float fDistance)

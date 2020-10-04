@@ -59,6 +59,7 @@ public class EnemyManager : BaseCharacterManager
 				}
 				else
 				{
+					enemy.SetAggroedCharacter(null);
 					if (enemy.GetStatus() != CharacterEnemy.Status.idle || enemy.GetStatus() != CharacterEnemy.Status.walking)
 					{
 						enemy.SetStatus(CharacterEnemy.Status.idle);
@@ -83,9 +84,11 @@ public class EnemyManager : BaseCharacterManager
 				float fDistance = 0.0f;
 				if(enemy.ResolveAggroDetection(character, ref fDistance))
 				{
+					enemy.SetAggroedCharacter(character);
+
 					//
 					// Set status according to distance
-					if(fDistance < enemy.GetCurrentAttackRange())
+					if (fDistance < enemy.GetCurrentAttackRange())
 					{
 						enemy.SetStatus(CharacterEnemy.Status.attacking);
 					}
@@ -115,6 +118,8 @@ public class EnemyManager : BaseCharacterManager
 				if(null != enemy)
 				{
 					m_aEnemiesNotAggroed.Add(enemy);
+
+					enemy.gameObject.transform.parent = gameObject.transform;
 				}
 			}
 			break;

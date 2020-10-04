@@ -122,13 +122,14 @@ public class PartyInventory : NetworkBehaviour
 	/// </summary>
 	/// <param name="_creditedItem">The item to uncredit</param>
 	/// <param name="_amount">The amount of items to uncredit</param>
-	public void UnCreditResource(ScriptableObjects.Item _creditedItem, int _amount = 1)
+	[Command(ignoreAuthority = true)]
+	public void UnCreditResource(string _creditedItemName, int _amount)
 	{
 		m_monInteger++;
-		m_resources[_creditedItem.name] -= _amount;
-		if (m_resources[_creditedItem.name] < 0)
+		m_resources[_creditedItemName] -= _amount;
+		if (m_resources[_creditedItemName] < 0)
 		{
-			m_resources[_creditedItem.name] = 0;
+			m_resources[_creditedItemName] = 0;
 		}
 	}
 

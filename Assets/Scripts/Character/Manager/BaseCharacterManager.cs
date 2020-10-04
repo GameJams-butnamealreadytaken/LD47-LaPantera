@@ -42,7 +42,7 @@ public abstract class BaseCharacterManager : NetworkBehaviour
 	}
 
 	[Server]
-	public bool SpawnCharacters(ECharacterType eType, int iCharactersCount, ref List<BaseCharacter> aBaseCharacters)
+	public bool SpawnCharacters(ECharacterType eType, int iCharactersCount, bool bSpawnOnServer, ref List<BaseCharacter> aBaseCharacters)
 	{
 		aBaseCharacters.Clear();
 
@@ -67,7 +67,7 @@ public abstract class BaseCharacterManager : NetworkBehaviour
 			}
 			
 			GameObject newCharacterObject = Instantiate(prefab, vPosition, qOrn);
-			BaseCharacter character = newCharacterObject.GetComponent<CharacterEnemy>();
+			BaseCharacter character = newCharacterObject.GetComponent<BaseCharacter>();
 			character.m_characterManager = this;
 			character.SetCharacterType(eType);
 
@@ -77,7 +77,10 @@ public abstract class BaseCharacterManager : NetworkBehaviour
 
 			//
 			// Spawn character on server
-			NetworkServer.Spawn(newCharacterObject);
+			if(bSpawnOnServer)
+			{
+				NetworkServer.Spawn(newCharacterObject);
+			}
 
 			//
 			// Add character to list

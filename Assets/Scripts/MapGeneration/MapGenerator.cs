@@ -35,7 +35,6 @@ public class MapGenerator : NetworkBehaviour
     public int yHeight = -3;
 
 	[Header("Spawners")]
-	public PlayerManager m_playerManager;
 	public EnemyManager m_enemyManager;
 
 	private Vector2 _realSize;
@@ -100,9 +99,9 @@ public class MapGenerator : NetworkBehaviour
 		foreach(int iClusterCount in aEnemyClusters)
 		{
 			List<BaseCharacter> enemies = new List<BaseCharacter>();
-			if (m_enemyManager.SpawnCharacters(ECharacterType.enemy_zombie, iClusterCount, ref enemies))
+			if (m_enemyManager.SpawnCharacters(ECharacterType.enemy_zombie, iClusterCount, true, ref enemies))
 			{
-				Debug.Log("Spawn success");
+				//Debug.Log("Spawn success");
 			}
 		}
 	}

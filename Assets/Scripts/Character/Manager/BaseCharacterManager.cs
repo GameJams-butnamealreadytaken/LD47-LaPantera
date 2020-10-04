@@ -13,8 +13,9 @@ public abstract class BaseCharacterManager : NetworkBehaviour
 	public float m_fSpawnRadius = 0.0f;
 
 	[Header("Character prefabs")]
-	[Tooltip(	"0 = player\n" +
-				"1 = enemy_zombie")
+	[Tooltip(	"0 = none\n" +
+				"1 = player\n" +
+				"2 = enemy_zombie")
 	]
 	public GameObject[] m_mapCharacterToPrefab = new GameObject[System.Enum.GetNames(typeof(ECharacterType)).Length];
 
@@ -68,6 +69,7 @@ public abstract class BaseCharacterManager : NetworkBehaviour
 			GameObject newCharacterObject = Instantiate(prefab, vPosition, qOrn);
 			BaseCharacter character = newCharacterObject.GetComponent<CharacterEnemy>();
 			character.m_characterManager = this;
+			character.SetCharacterType(eType);
 
 			//
 			// Notify sub-class
@@ -109,5 +111,10 @@ public abstract class BaseCharacterManager : NetworkBehaviour
 		}
 
 		return false;
+	}
+
+	public List<BaseCharacter> GetCharacters()
+	{
+		return m_aCharacters;
 	}
 }

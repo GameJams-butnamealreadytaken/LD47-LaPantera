@@ -341,7 +341,7 @@ Transform:
   - {fileID: 7457923360753955196}
   - {fileID: 7457923360753955112}
   m_Father: {fileID: 7457923360753955182}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7457923360753986812
 GameObject:
@@ -1608,7 +1608,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7457923360753955182}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &7457923360740384846
 SkinnedMeshRenderer:
@@ -1715,7 +1715,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7457923360753955182}
-  - component: {fileID: 7457923360744627854}
   - component: {fileID: 3960131240011572349}
   - component: {fileID: 2062648669173371197}
   - component: {fileID: 522719054144166537}
@@ -1723,6 +1722,7 @@ GameObject:
   - component: {fileID: 2975259214286540675}
   - component: {fileID: 3305391399332782263}
   - component: {fileID: 4106470852028548602}
+  - component: {fileID: 1778559941607997814}
   m_Layer: 0
   m_Name: EnemyZombie
   m_TagString: Untagged
@@ -1741,30 +1741,11 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 7457923360753955180}
   - {fileID: 7457923360753955098}
+  - {fileID: 7457923360753955180}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &7457923360744627854
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7457923360753986894}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: d9298dcc78ae34c4aaa14ff373b822b9, type: 3}
-  m_Controller: {fileID: 9100000, guid: fddfc605073415d4fa4571c75046893d, type: 2}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &3960131240011572349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1803,6 +1784,8 @@ MonoBehaviour:
   m_iLootCountMin: 1
   m_iLootCountMax: 1
   m_iLootItem: {fileID: 0}
+  m_fAggroRadius: 10
+  m_bShowAggroRadius: 0
 --- !u!114 &522719054144166537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1818,7 +1801,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   clientAuthority: 0
-  animator: {fileID: 7457923360744627854}
+  animator: {fileID: 1778559941607997814}
 --- !u!136 &5327334674965881416
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1889,6 +1872,25 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 2
+--- !u!95 &1778559941607997814
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7457923360753986894}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: d9298dcc78ae34c4aaa14ff373b822b9, type: 3}
+  m_Controller: {fileID: 9100000, guid: fddfc605073415d4fa4571c75046893d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7457923360753986896
 GameObject:
   m_ObjectHideFlags: 0

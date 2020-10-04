@@ -16,5 +16,4 @@ MonoBehaviour:
   m_description: A tiny rock
   m_type: 0
   m_icon: {fileID: 246200477909967752, guid: eaae9e6d836151a4eb91550f49223083, type: 3}
-  m_prefab: {fileID: 1813936166126086126, guid: 783ad6abe43faa04aa8f95fda606d822,
-    type: 3}
+  m_prefab: {fileID: 683027840691986437, guid: fdf6e85c23c66a74f835b7d28b20a1fd, type: 3}

@@ -82,19 +82,6 @@ public class PlayerController : NetworkBehaviour
 		{
 			return;
 		}
-
-	    if (GetComponent<NetworkIdentity>().isServer)
-	    {
-		    if (animator.GetCurrentAnimatorStateInfo(0).IsName("Interact"))
-		    {
-			    float normalizedTime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-		    
-			    if (equippedObject != null)
-			    {
-				    equippedObject.GetComponent<Item>().SetIsInInteractFrame(normalizedTime >= 0.33f && normalizedTime <= 0.80f);
-			    }   
-		    }
-	    }
 	    
         if (!hasAuthority || !isLocalPlayer)
         {
@@ -105,6 +92,16 @@ public class PlayerController : NetworkBehaviour
             
             return;
         }
+
+		if (animator.GetCurrentAnimatorStateInfo(0).IsName("Interact"))
+		{
+			float normalizedTime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+		
+			if (equippedObject != null)
+			{
+				equippedObject.GetComponent<Item>().SetIsInInteractFrame(normalizedTime >= 0.33f && normalizedTime <= 0.80f);
+			}   
+		}
 
 		float fHorizontal = InputMoveValues.x;
 		float fVertical = InputMoveValues.y;

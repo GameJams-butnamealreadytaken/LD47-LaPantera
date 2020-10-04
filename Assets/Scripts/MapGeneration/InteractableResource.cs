@@ -20,8 +20,8 @@ public class InteractableResource : NetworkBehaviour
         
     }
     
-    [Server]
-    public void Gather()
+    [Command(ignoreAuthority = true)]
+    public void CmdGather()
     {
         List<GameObject> spawnedObjects = resourceDescriptor.Spawn(this.transform.position, 1);
 
@@ -35,7 +35,7 @@ public class InteractableResource : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!GetComponent<NetworkIdentity>().isServer)
+        if (!GetComponent<NetworkIdentity>().isClient)
         {
             return;
         }
@@ -46,7 +46,14 @@ public class InteractableResource : NetworkBehaviour
         {
             return;
         }
+
+        PlayerController playerController = item.GetComponentInParent<PlayerController>();
+
+        if (playerController == null || !playerController.isLocalPlayer)
+        {
+            return;
+        }
         
-        Gather();
+        CmdGather();
     }
 }

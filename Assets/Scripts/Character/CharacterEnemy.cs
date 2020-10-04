@@ -39,6 +39,7 @@ public class CharacterEnemy : BaseCharacter
 	private Rigidbody m_body;
 	
 	private Vector3 m_vDirection;
+	private float m_fMaxIdleToWalkThresholdRandom;
 	private float m_fDurationIdleToWalk;
 	private float m_fDurationWalkToIdle;
 	private NavMeshAgent m_agent;
@@ -66,6 +67,7 @@ public class CharacterEnemy : BaseCharacter
 		Assert.IsNotNull(m_agent);
 		m_agent.updateRotation = true;
 		m_agent.acceleration = 1.0f;
+		m_fMaxIdleToWalkThresholdRandom = Random.Range(m_iMaxIdleToWalkThreshold * 0.5f, m_iMaxIdleToWalkThreshold);
 
 		m_animator = GetComponent<Animator>();
 		Assert.IsNotNull(m_animator);
@@ -118,11 +120,12 @@ public class CharacterEnemy : BaseCharacter
 			else if (Status.idle == m_eStatus)
 			{
 				m_fDurationIdleToWalk += Time.fixedDeltaTime;
-				if (m_fDurationIdleToWalk >= m_iMaxIdleToWalkThreshold)
+				if (m_fDurationIdleToWalk >= m_fMaxIdleToWalkThresholdRandom)
 				{
 					m_animator.SetBool(m_astrStatusString[(int)(Status.walking)], true);
 					SetStatus(Status.walking);
 					m_fDurationIdleToWalk = 0.0f;
+					m_fMaxIdleToWalkThresholdRandom = Random.Range(m_iMaxIdleToWalkThreshold * 0.5f, m_iMaxIdleToWalkThreshold);
 				}
 			}
 			else if(Status.dying == m_eStatus && m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)

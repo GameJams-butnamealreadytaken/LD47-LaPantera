@@ -176,9 +176,17 @@ public class CharacterEnemy : BaseCharacter
 		// Attacking
 		else if(Status.attacking == m_eStatusToProcess)
 		{
-			if(m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+			if(m_characterAggroed.GetCurrentHP() > 0.0f)
 			{
-				m_characterAggroed.TakeDamage(m_fCurrentAttackStrength);
+				if (m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+				{
+					m_characterAggroed.TakeDamage(m_fCurrentAttackStrength);
+				}
+			}
+			else
+			{
+				SetAggroedCharacter(null);
+				SetStatus(Status.idle);
 			}
 		}
 		else 

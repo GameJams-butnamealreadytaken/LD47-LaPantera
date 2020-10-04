@@ -64,6 +64,8 @@ public class CharacterEnemy : BaseCharacter
 
 		m_agent = GetComponent<NavMeshAgent>();
 		Assert.IsNotNull(m_agent);
+		m_agent.updateRotation = true;
+		m_agent.acceleration = 1.0f;
 
 		m_animator = GetComponent<Animator>();
 		Assert.IsNotNull(m_animator);
@@ -95,7 +97,8 @@ public class CharacterEnemy : BaseCharacter
 	[Server]
 	private void FixedUpdate()
 	{
-		m_agent.speed = GetCurrentSpeed() * 0.1f;
+		m_agent.speed = GetCurrentSpeed();
+		m_agent.angularSpeed = GetCurrentSpeed();
 
 		//
 		// First handle custom SetStatus (Idle->Walking, Walking->Idle, Dying->Death)
@@ -109,6 +112,7 @@ public class CharacterEnemy : BaseCharacter
 					m_animator.SetBool(m_astrStatusString[(int)(Status.walking)], false);
 					SetStatus(Status.idle);
 					m_fDurationWalkToIdle = 0.0f;
+					m_agent.velocity = Vector3.zero;
 				}
 			}
 			else if (Status.idle == m_eStatus)
@@ -142,10 +146,10 @@ public class CharacterEnemy : BaseCharacter
 			{
 				Vector2 vDirectionXZ = Random.insideUnitCircle;
 				m_vDirection = new Vector3(vDirectionXZ.x, 0.0f, vDirectionXZ.y);
-				transform.rotation = Quaternion.FromToRotation(Vector3.zero, m_vDirection);
+				transform.rotation = Quaternion.FromToRotation(Vector3.forward, m_vDirection);
 			}
 
-			m_agent.Move(m_vDirection);
+			m_agent.velocity = m_vDirection * GetCurrentSpeed();
 
 		} // Tracking
 		else if(Status.tracking == m_eStatusToProcess || Status.tracking == m_eStatus)

@@ -59,14 +59,15 @@ public class BaseCharacter : NetworkBehaviour
 	}
 
 	[Server]
-	private void OnCharacterDeath() 
+	protected virtual void OnCharacterDeath() 
 	{
-		// TODO
-		// - drop item
+		// 
+		// Drop item
+		DropItem();
 
 		//
 		// Call associated manager for destruction
-		//m_characterManager.DestroyCharacter(this);
+		m_characterManager.DestroyCharacter(this);
 	}
 
 	[Command]
@@ -77,6 +78,11 @@ public class BaseCharacter : NetworkBehaviour
 		{
 			OnCharacterDeath();
 		}
+	}
+
+	protected void DropItem()
+	{
+		// todo
 	}
 	
 	public float GetCurrentHP()

@@ -23,4 +23,13 @@ public class CharacterPlayer : BaseCharacter
 
         CharacterSkin.material.mainTexture = aSkins[skinId];
     }
+
+
+	[Server]
+	protected override void OnCharacterDeath()
+	{
+		//
+		// Drop item
+		DropItem();
+	}
 }

@@ -13,9 +13,13 @@ public class EnemyManager : BaseCharacterManager
 	private List<CharacterEnemy> m_aEnemiesNotAggroed = new List<CharacterEnemy>();
 	private List<CharacterEnemy> m_aEnemiesAggroed = new List<CharacterEnemy>();
 	
-	[Server]
 	private void FixedUpdate()
 	{
+		if(!isServer)
+		{
+			return;
+		}
+
 		//
 		// First check for dead enemies
 		int iEnemyIndex = 0;
@@ -79,7 +83,7 @@ public class EnemyManager : BaseCharacterManager
 		aEnemiesTemp.Clear();
 		foreach (CharacterEnemy enemy in m_aEnemiesNotAggroed)
 		{
-			foreach(BaseCharacter character in m_playerManager.GetCharacters())
+			foreach(BaseCharacter character in m_playerManager.GetPlayersAlive())
 			{
 				float fDistance = 0.0f;
 				if(enemy.ResolveAggroDetection(character, ref fDistance))

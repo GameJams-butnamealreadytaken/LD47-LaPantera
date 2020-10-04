@@ -14,8 +14,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
+
 public class PartyInventory : NetworkBehaviour
 {
+	public class SyncListBlueprints : SyncList<string> { }
+	public class SyncDictionaryResources : SyncDictionary<string, int> {}
+	
 	public ScriptableObjects.Blueprint m_tempUnlockRecipe; 	//TODO: Remove
 	
 	/// <summary>
@@ -36,20 +40,19 @@ public class PartyInventory : NetworkBehaviour
 		}
 	}
 
-	[SyncVar]
-	private List<ScriptableObjects.Blueprint> m_unlockedBlueprints = new List<ScriptableObjects.Blueprint>();	//< The blueprints that has been unlocked 
-	[SyncVar]
-	private Dictionary<string, int> m_resources = new Dictionary<string, int>();	// The amount of resources of each type (by name) that the party has
+
+	private SyncListBlueprints m_unlockedBlueprints = new SyncListBlueprints();	//< The blueprints that has been unlocked 
+	private SyncDictionaryResources m_resources = new SyncDictionaryResources();	// The amount of resources of each type (by name) that the party has
 
 	/// <summary>
 	/// The resources that the party has in the form of dicionary : Name of resource/item -> amount
 	/// </summary>
-	public Dictionary<string, int> Resources
+	public SyncDictionary<string, int> Resources
 	{
 		get { return m_resources;  }
 	}
 	
-	[SyncVar]
+	// [SyncVar]
 	private static PartyInventory m_instance;	// Singleton instance
 	/// <summary>
 	/// Instance of the party inventory
@@ -60,7 +63,7 @@ public class PartyInventory : NetworkBehaviour
 	}
 
 	[SerializeField]
-	[SyncVar]
+	// [SyncVar]
 	[Tooltip("The array of resources (items) that are available in this game")]
 	private List<ScriptableObjects.Item> m_availableResources = new List<ScriptableObjects.Item>();
 
@@ -93,7 +96,6 @@ public class PartyInventory : NetworkBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-		
 	}
 
 	// Update is called once per frame
@@ -136,7 +138,7 @@ public class PartyInventory : NetworkBehaviour
 	{
 		//
 		// We check in the unlocked blueprints if our blueprint is unlocked
-		if (m_unlockedBlueprints.Contains(blueprint))
+		if (m_unlockedBlueprints.Contains(blueprint.name))
 		{
 			return true;
 		}
@@ -190,7 +192,7 @@ public class PartyInventory : NetworkBehaviour
 
 		if (GUILayout.Button("Unlock recipe !"))
 		{
-			m_unlockedBlueprints.Add(m_tempUnlockRecipe);
+			m_unlockedBlueprints.Add(m_tempUnlockRecipe.name);
 		}
 
 		if (GUILayout.Button("Add Wood *2 "))

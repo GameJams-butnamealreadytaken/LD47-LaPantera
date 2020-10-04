@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
 public class Resource : MonoBehaviour
@@ -17,5 +19,19 @@ public class Resource : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!GetComponent<NetworkIdentity>().isServer)
+        {
+            return;
+        }
+
+        if (other.gameObject.GetComponent<PlayerController>())
+        {
+            PartyInventory.Instance.CreditResource(resourceDescriptor, resourceCount);
+            Destroy(this.gameObject);
+        }
     }
 }

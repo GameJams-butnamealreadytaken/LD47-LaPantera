@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2685972455464481762}
   - component: {fileID: 7528045893747950225}
   - component: {fileID: -5546943457274724999}
+  - component: {fileID: 3508570455183871249}
   m_Layer: 0
   m_Name: DropWood
   m_TagString: Untagged
@@ -112,3 +113,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resourceDescriptor: {fileID: 11400000, guid: 1bd46e9c6500aa841bf60cf7ef19c0bf, type: 2}
   resourceCount: 3
+--- !u!65 &3508570455183871249
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4487416772883780151}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.42471707, y: 0.34641019, z: 0.7099999}
+  m_Center: {x: -0.012358546, y: 0.173205, z: 0}

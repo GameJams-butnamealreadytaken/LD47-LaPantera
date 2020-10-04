@@ -216,7 +216,7 @@ MonoBehaviour:
   m_iLootCountMin: 1
   m_iLootCountMax: 1
   m_iLootItem: {fileID: 0}
-  m_iCurrentHP: 0
+  m_fCurrentHP: 0
   m_fCurrentSpeed: 0
   m_fCurrentAttackStrength: 0
   m_fCurrentAttackRange: 0
@@ -313,9 +313,9 @@ MonoBehaviour:
   m_inGameInputActionMap: Gameplay
   m_inInventoryInputActionMap: Inventory
   m_inMenuInputActionMap: Menu
-  m_navigationInGameReference: {fileID: -2934683402064566810, guid: a073d8482da555742a12dd901ab71125,
+  m_navigationInGameReference: {fileID: -7436875430999082186, guid: 5014c64e23729684a9aef4e744c83526,
     type: 3}
-  m_navigationInInventoryReference: {fileID: 8606560561710962444, guid: a073d8482da555742a12dd901ab71125,
+  m_navigationInInventoryReference: {fileID: 7979683268378014119, guid: 5014c64e23729684a9aef4e744c83526,
     type: 3}
 --- !u!1001 &8130949811753682749
 PrefabInstance:

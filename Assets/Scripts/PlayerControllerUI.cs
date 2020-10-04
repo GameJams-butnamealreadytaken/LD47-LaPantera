@@ -62,6 +62,12 @@ public class PlayerControllerUI : MonoBehaviour
 		//
 		// Retrieve the player input
 		m_playerInput = GetComponent<PlayerInput>();
+		
+		//
+		// Replace the input reference in the input navigation
+		m_inputSystemUIInputModule.enabled = false;
+		m_inputSystemUIInputModule.move = m_navigationInGameReference;
+		m_inputSystemUIInputModule.enabled = true;
 	}
 
 	// Update is called once per frame
@@ -81,7 +87,9 @@ public class PlayerControllerUI : MonoBehaviour
 			
 			//
 			// Replace the input reference in the input navigation
+			m_inputSystemUIInputModule.enabled = false;
 			m_inputSystemUIInputModule.move = m_navigationInInventoryReference;
+			m_inputSystemUIInputModule.enabled = true;
 
 			//
 			//
@@ -101,8 +109,11 @@ public class PlayerControllerUI : MonoBehaviour
 			
 			//
 			// Replace the input reference in the input navigation
+			m_inputSystemUIInputModule.enabled = false;
 			m_inputSystemUIInputModule.move = m_navigationInGameReference;
+			m_inputSystemUIInputModule.enabled = true;
 
+			
 			//
 			//
 			m_canSwitchState = false;

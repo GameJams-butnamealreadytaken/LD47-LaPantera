@@ -40,3 +40,4 @@ public class CharacterPlayer : BaseCharacter
 	{
 		// todo ghost cam
 	}
+}

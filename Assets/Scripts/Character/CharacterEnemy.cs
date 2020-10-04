@@ -216,6 +216,9 @@ public class CharacterEnemy : BaseCharacter
 
 	public bool ResolveAggroDetection(BaseCharacter character, ref float fDistance)
 	{
+		if (!character)
+			return false;
+
 		fDistance = Vector3.Distance(character.gameObject.transform.position, transform.position);
 
 		return fDistance <= m_fAggroRadius;

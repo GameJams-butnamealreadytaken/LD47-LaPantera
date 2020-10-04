@@ -11,8 +11,8 @@ public class PlayerController : NetworkBehaviour
 
 	public AudioListener PlayerAudioListener;
 	public PlayerInput Inputs;
-
-	public GameObject tempAxePrefab;
+	
+	public List<GameObject> equipableObjects;
 
 	private Rigidbody rb;
 	private Animator animator;
@@ -47,7 +47,7 @@ public class PlayerController : NetworkBehaviour
 
 		Camera.main.gameObject.GetComponent<CameraManager>().PlayerTarget = gameObject;
 		
-		CmdEquipObject();
+		CmdEquipObject(0);
 	}
 
 	[Client]
@@ -187,9 +187,20 @@ public class PlayerController : NetworkBehaviour
 	}
 
 	[Command]
-	private void CmdEquipObject()
+	private void CmdEquipObject(int objectIndex)
 	{
-		GameObject spawnedObject = Instantiate(tempAxePrefab, handBone.position, handBone.rotation);
+		if (equippedObject != null)
+		{
+			Destroy(equippedObject);
+			equippedObject = null;
+		}
+
+		if (objectIndex < 0)
+		{
+			return;
+		}
+		
+		GameObject spawnedObject = Instantiate(equipableObjects[objectIndex], handBone.position, handBone.rotation);
 		spawnedObject.transform.SetParent(handBone);
 		
 		NetworkServer.Spawn(spawnedObject);

@@ -1778,14 +1778,22 @@ MonoBehaviour:
   syncInterval: 0.1
   m_characterManager: {fileID: 0}
   m_iMaxHP: 5
-  m_fSpeed: 10
-  m_fAttackStrength: 1
-  m_fAttackRange: 3
+  m_fSpeed: 2
+  m_fAttackStrength: 3
+  m_fAttackRange: 1.5
   m_iLootCountMin: 1
   m_iLootCountMax: 1
   m_iLootItem: {fileID: 0}
+  m_iCurrentHP: 0
+  m_fCurrentSpeed: 0
+  m_fCurrentAttackStrength: 0
+  m_fCurrentAttackRange: 0
   m_fAggroRadius: 10
   m_bShowAggroRadius: 0
+  m_bShowAttackRadius: 1
+  m_bShowMoveDirection: 1
+  m_iMaxIdleToWalkThreshold: 8
+  m_iMaxWalkToIdleThreshold: 4
 --- !u!114 &522719054144166537
 MonoBehaviour:
   m_ObjectHideFlags: 0

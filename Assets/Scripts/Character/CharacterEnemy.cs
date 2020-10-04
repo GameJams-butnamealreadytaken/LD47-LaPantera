@@ -143,6 +143,9 @@ public class CharacterEnemy : BaseCharacter
 		{
 			m_animator.SetBool(m_astrStatusString[(int)(m_eStatus)], false);
 			m_animator.SetBool(m_astrStatusString[(int)(m_eStatusToProcess)], true);
+
+			m_fDurationIdleToWalk = 0.0f;
+			m_fDurationWalkToIdle = 0.0f;
 		}
 
 		//

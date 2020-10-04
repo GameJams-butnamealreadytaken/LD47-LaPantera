@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 1007113843134746085}
   - component: {fileID: 4010412202024905219}
   - component: {fileID: 7677215233132127867}
+  - component: {fileID: 3056273458796770497}
   m_Layer: 0
   m_Name: PlayerCharacter
   m_TagString: Untagged
@@ -215,6 +216,26 @@ MonoBehaviour:
   m_iLootCountMin: 1
   m_iLootCountMax: 1
   m_iLootItem: {fileID: 0}
+--- !u!114 &3056273458796770497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8572773432784716508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 823ed72c350844a4ca89e9d8c2f0b6c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_inGameInputActionMap: Gameplay
+  m_inInventoryInputActionMap: Inventory
+  m_inMenuInputActionMap: Menu
+  m_inputSystemUIInputModule: {fileID: 0}
+  m_navigationInGameReference: {fileID: -2934683402064566810, guid: a073d8482da555742a12dd901ab71125,
+    type: 3}
+  m_navigationInInventoryReference: {fileID: 8606560561710962444, guid: a073d8482da555742a12dd901ab71125,
+    type: 3}
 --- !u!1001 &8130949811753682749
 PrefabInstance:
   m_ObjectHideFlags: 0

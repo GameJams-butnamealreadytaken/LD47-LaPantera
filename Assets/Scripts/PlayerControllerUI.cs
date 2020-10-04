@@ -7,6 +7,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
@@ -18,7 +19,6 @@ public class PlayerControllerUI : MonoBehaviour
 	#region Variables
 
 		[Header("UI")]
-		[SerializeField]
 		[Tooltip("The player UI that contains all the UI parts for the player")]
 		private PlayerUI m_playerUI;
 	
@@ -39,7 +39,7 @@ public class PlayerControllerUI : MonoBehaviour
 		private bool m_canSwitchState = true;	//< True when the player can switch state (ingame/menu/inventory), false otherwise. Auto-resetting via an invoke
 
 		[Header("Input customisation")]
-		public InputSystemUIInputModule m_inputSystemUIInputModule;
+		private InputSystemUIInputModule m_inputSystemUIInputModule;
 		public InputActionReference m_navigationInGameReference;
 		public InputActionReference m_navigationInInventoryReference;
 	
@@ -49,6 +49,16 @@ public class PlayerControllerUI : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
+		//
+		// Retrieve the player UI
+		m_playerUI = GameObject.FindWithTag("PlayerUI").GetComponent<PlayerUI>();
+		Assert.IsNotNull(m_playerUI, "Can't find the PlayerUI ! ");
+		
+		//
+		// Retrieve the input system ui input module that is on the EventSystem object
+		m_inputSystemUIInputModule = GameObject.FindWithTag("EventSystem").GetComponent<InputSystemUIInputModule>();
+		Assert.IsNotNull(m_playerUI, "Can't find the EventSystem (so the InputSystemUIInputModule is null) ! ");
+			
 		//
 		// Retrieve the player input
 		m_playerInput = GetComponent<PlayerInput>();

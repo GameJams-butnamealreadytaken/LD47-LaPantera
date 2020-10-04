@@ -5,6 +5,8 @@ using Mirror;
 
 public enum ECharacterType
 {
+	none,
+
 	player,
 	enemy_zombie,
 };
@@ -36,6 +38,8 @@ public class BaseCharacter : NetworkBehaviour
 	private float m_fCurrentAttackRange;
 	[SyncVar]
 	private string m_strName;
+	[SyncVar]
+	private ECharacterType m_eType = ECharacterType.none;
 
 	// Start is called before the first frame update
 	protected void Start()
@@ -94,5 +98,15 @@ public class BaseCharacter : NetworkBehaviour
 	public float GetCurrentAttackRange()
 	{
 		return m_fCurrentAttackRange;
+	}
+
+	public void SetCharacterType(ECharacterType eType)
+	{
+		m_eType = eType;
+	}
+
+	public ECharacterType GetCharacterType()
+	{
+		return m_eType;
 	}
 }

@@ -7,13 +7,101 @@ using Mirror;
 
 public class EnemyManager : BaseCharacterManager
 {
-	private void Start()
-	{
-	}
+	[Header("EnemyManager custom properties")]
+	public PlayerManager m_playerManager;
 
-	private void Update()
+	private List<CharacterEnemy> m_aEnemiesNotAggroed = new List<CharacterEnemy>();
+	private List<CharacterEnemy> m_aEnemiesAggroed = new List<CharacterEnemy>();
+	
+	[Server]
+	private void FixedUpdate()
 	{
-		
+		//
+		// First check for dead enemies
+		int iEnemyIndex = 0;
+		while (iEnemyIndex < m_aCharacters.Count)
+		{
+			CharacterEnemy enemy = m_aCharacters[iEnemyIndex] as CharacterEnemy;
+			CharacterEnemy.Status status = enemy.GetStatus();
+			if (status == CharacterEnemy.Status.dead)
+			{
+				base.DestroyCharacter(enemy);
+				--iEnemyIndex;
+			}
+			++iEnemyIndex;
+		}
+
+		//
+		// Then check validity of aggroed status
+		List<CharacterEnemy> aEnemiesTemp = new List<CharacterEnemy>();
+		foreach(CharacterEnemy enemy in m_aEnemiesAggroed)
+		{
+			BaseCharacter aggroedCharacter = enemy.GetAggroedCharacter();
+			if (null != aggroedCharacter)
+			{
+				float fDistance = 0.0f;
+				if (enemy.ResolveAggroDetection(aggroedCharacter, ref fDistance))
+				{
+					if (fDistance < enemy.GetCurrentAttackRange())
+					{
+						if (enemy.GetStatus() != CharacterEnemy.Status.attacking)
+						{
+							enemy.SetStatus(CharacterEnemy.Status.attacking);
+						}
+					}
+					else
+					{
+						if (enemy.GetStatus() != CharacterEnemy.Status.tracking)
+						{
+							enemy.SetStatus(CharacterEnemy.Status.tracking);
+						}
+					}
+				}
+				else
+				{
+					if (enemy.GetStatus() != CharacterEnemy.Status.idle || enemy.GetStatus() != CharacterEnemy.Status.walking)
+					{
+						enemy.SetStatus(CharacterEnemy.Status.idle);
+						aEnemiesTemp.Add(enemy);
+					}
+				}
+			}
+		}
+		foreach (CharacterEnemy enemy in aEnemiesTemp)
+		{
+			m_aEnemiesAggroed.Remove(enemy);
+			m_aEnemiesNotAggroed.Add(enemy);
+		}
+
+		//
+		// Then check for idle/walking
+		aEnemiesTemp.Clear();
+		foreach (CharacterEnemy enemy in m_aEnemiesNotAggroed)
+		{
+			foreach(BaseCharacter character in m_playerManager.GetCharacters())
+			{
+				float fDistance = 0.0f;
+				if(enemy.ResolveAggroDetection(character, ref fDistance))
+				{
+					//
+					// Set status according to distance
+					if(fDistance < enemy.GetCurrentAttackRange())
+					{
+						enemy.SetStatus(CharacterEnemy.Status.attacking);
+					}
+					else
+					{
+						enemy.SetStatus(CharacterEnemy.Status.tracking);
+					}
+					aEnemiesTemp.Add(enemy);
+				}
+			}
+		}
+		foreach (CharacterEnemy enemy in aEnemiesTemp)
+		{
+			m_aEnemiesNotAggroed.Remove(enemy);
+			m_aEnemiesAggroed.Add(enemy);
+		}
 	}
 
 	[Server]
@@ -23,10 +111,15 @@ public class EnemyManager : BaseCharacterManager
 		{
 			case ECharacterType.enemy_zombie:
 			{
-				// ...
+				CharacterEnemy enemy = baseCharacter as CharacterEnemy;
+				if(null != enemy)
+				{
+					m_aEnemiesNotAggroed.Add(enemy);
+				}
 			}
 			break;
 
+			case ECharacterType.none:
 			case ECharacterType.player:
 			default:
 			{
@@ -39,6 +132,28 @@ public class EnemyManager : BaseCharacterManager
 	[Server]
 	protected override void OnCharacterAboutToBeDestroyed(BaseCharacter baseCharacter)
 	{
-		// TODO
+		switch(baseCharacter.GetCharacterType())
+		{
+			case ECharacterType.enemy_zombie:
+			{
+				CharacterEnemy enemy = baseCharacter as CharacterEnemy;
+				if(null != enemy)
+				{
+					//
+					// Remvoe enemy from no/aggroed array
+					m_aEnemiesAggroed.Remove(enemy);
+					m_aEnemiesNotAggroed.Remove(enemy);
+				}
+			}
+			break;
+
+			case ECharacterType.none:
+			case ECharacterType.player:
+			default:
+			{
+				Assert.IsTrue(false);
+			}
+			break;
+		}
 	}
 }

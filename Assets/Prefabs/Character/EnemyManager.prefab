@@ -68,4 +68,6 @@ MonoBehaviour:
   m_fSpawnRadius: 0
   m_mapCharacterToPrefab:
   - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 7457923360753986894, guid: 9b0a2cc3ac446a04eba2e30ed3bbdc24, type: 3}
+  m_playerManager: {fileID: 0}

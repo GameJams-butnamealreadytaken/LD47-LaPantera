@@ -92,31 +92,31 @@ public class PlayerController : NetworkBehaviour
 			rb.velocity = new Vector3(fHorizontal * fSpeed, rb.velocity.y, fVertical * fSpeed);
 
 			float fAngle = 0.0f;
-			if (fHorizontal >= 0.7f)
+			if (fHorizontal >= 0.1f)
 			{
 				fAngle = 90.0f;
-				if (fVertical >= 0.7f)
+				if (fVertical > 0.0f)
 				{
 					fAngle -= 45.0f;
 				}
-				else if (fVertical <= -0.7f)
+				else if (fVertical < -0.0f)
 				{
 					fAngle += 45.0f;
 				}
 			}
-			else if (fHorizontal <= -0.7f)
+			else if (fHorizontal < -0.0f)
 			{
 				fAngle = -90.0f;
-				if (fVertical >= 0.7f)
+				if (fVertical > 0.0f)
 				{
 					fAngle += 45.0f;
 				}
-				else if (fVertical <= -0.7f)
+				else if (fVertical < -0.0f)
 				{
 					fAngle -= 45.0f;
 				}
 			}
-			else if(fVertical == -1.0f)
+			else if(fVertical < 0.0f)
 			{
 				fAngle = -180.0f;
 			}
@@ -129,6 +129,7 @@ public class PlayerController : NetworkBehaviour
 		}
 		else if (bWalking)
 		{
+			rb.velocity = Vector3.zero;
 			animator.SetBool("Walking", false);
 			bWalking = false;
 		}

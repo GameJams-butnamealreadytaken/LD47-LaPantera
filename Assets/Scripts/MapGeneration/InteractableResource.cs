@@ -42,7 +42,7 @@ public class InteractableResource : NetworkBehaviour
         
         Item item = other.gameObject.GetComponent<Item>();
 
-        if (item == null)
+        if (item == null || !item.IsInInteractFrame())
         {
             return;
         }

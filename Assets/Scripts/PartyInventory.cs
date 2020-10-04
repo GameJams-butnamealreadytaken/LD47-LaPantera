@@ -122,7 +122,7 @@ public class PartyInventory : NetworkBehaviour
 	/// </summary>
 	/// <param name="_creditedItem">The item to uncredit</param>
 	/// <param name="_amount">The amount of items to uncredit</param>
-	[Command]
+	[Command(ignoreAuthority = true)]
 	public void UnCreditResource(string _creditedItemName, int _amount)
 	{
 		m_monInteger++;

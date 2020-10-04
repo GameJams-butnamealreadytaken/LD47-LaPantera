@@ -32,13 +32,8 @@ public class InteractableResource : NetworkBehaviour
         Destroy(this.gameObject);
     }
 
-    private void OnCollisionEnter(Collision other)
-    {
-        if (other.gameObject.CompareTag("Weapon"))
-        {
-            Debug.Log("YES IT IS ");
-        }
-        
+    private void OnTriggerEnter(Collider other)
+    {        
         Item item = other.gameObject.GetComponent<Item>();
 
         if (item == null)

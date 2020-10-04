@@ -29,7 +29,7 @@ public class BaseCharacter : NetworkBehaviour
 
 	[Header("Characteristics overriden")]
 	[SyncVar]
-	public int m_iCurrentHP;
+	public float m_fCurrentHP;
 	[SyncVar]
 	public float m_fCurrentSpeed;
 	[SyncVar]
@@ -52,7 +52,7 @@ public class BaseCharacter : NetworkBehaviour
 	{
 		//
 		// Current characteristic = initial characteristic
-		m_iCurrentHP = m_iMaxHP;
+		m_fCurrentHP = m_iMaxHP;
 		m_fCurrentSpeed = m_fSpeed;
 		m_fCurrentAttackStrength = m_fAttackStrength;
 		m_fCurrentAttackRange = m_fAttackRange;
@@ -66,22 +66,22 @@ public class BaseCharacter : NetworkBehaviour
 
 		//
 		// Call associated manager for destruction
-		m_characterManager.DestroyCharacter(this);
+		//m_characterManager.DestroyCharacter(this);
 	}
 
 	[Command]
-	private void TakeDamage(int iDamage)
+	public void TakeDamage(float fDamage)
 	{
-		m_iCurrentHP = Mathf.Max(m_iCurrentHP - iDamage, 0);
-		if(m_iCurrentHP == 0)
+		m_fCurrentHP = Mathf.Max(m_fCurrentHP - fDamage, 0.0f);
+		if(m_fCurrentHP <= 0.0f)
 		{
 			OnCharacterDeath();
 		}
 	}
 	
-	public int GetCurrentHP()
+	public float GetCurrentHP()
 	{
-		return m_iCurrentHP;
+		return m_fCurrentHP;
 	}
 	
 	public float GetCurrentSpeed()

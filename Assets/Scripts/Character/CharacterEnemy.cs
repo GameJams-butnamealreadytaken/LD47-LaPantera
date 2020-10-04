@@ -173,6 +173,14 @@ public class CharacterEnemy : BaseCharacter
 			m_agent.speed = GetCurrentSpeed() * 3.0f;
 			m_agent.angularSpeed = GetCurrentSpeed() * 3.0f;
 		}
+		// Attacking
+		else if(Status.attacking == m_eStatusToProcess)
+		{
+			if(m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+			{
+				m_characterAggroed.TakeDamage(m_fCurrentAttackStrength);
+			}
+		}
 		else 
 		{
 			m_body.velocity = Vector3.zero;

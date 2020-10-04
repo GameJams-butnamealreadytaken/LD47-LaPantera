@@ -76,6 +76,13 @@ public class PlayerController : NetworkBehaviour
     
     void FixedUpdate()
     {
+		//
+		// Do not update if dead
+		if(CharacterPlayer.GetCurrentHP() <= 0)
+		{
+			return;
+		}
+
 	    if (GetComponent<NetworkIdentity>().isServer)
 	    {
 		    if (animator.GetCurrentAnimatorStateInfo(0).IsName("Interact"))

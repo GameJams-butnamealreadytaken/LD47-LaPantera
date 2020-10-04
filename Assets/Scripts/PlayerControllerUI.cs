@@ -42,6 +42,8 @@ public class PlayerControllerUI : MonoBehaviour
 		private InputSystemUIInputModule m_inputSystemUIInputModule;
 		public InputActionReference m_navigationInGameReference;
 		public InputActionReference m_navigationInInventoryReference;
+
+		private bool m_canCraft = true;
 	
 	#endregion
 	
@@ -73,7 +75,10 @@ public class PlayerControllerUI : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-
+		if (m_playerInput.actions["Craft"].triggered)
+		{
+			Craft();
+		}
 	}
 
 	private void OnOpenInventory()
@@ -126,9 +131,19 @@ public class PlayerControllerUI : MonoBehaviour
 		return m_playerUI.CurrentState == PlayerUI.State.inventory;
 	}
 
-	public void OnCraft()
+	public void Craft()
 	{
-		m_playerUI.Craft();
+		if (m_canCraft)
+		{
+			m_playerUI.Craft();
+			m_canCraft = false;
+			Invoke(nameof(ResetCanCraftDirty), 0.4f);
+		}
+	}
+
+	public void ResetCanCraftDirty()
+	{
+		m_canCraft = true;
 	}
 
 	private void ResetCanSwitchState()

@@ -111,6 +111,8 @@ MonoBehaviour:
   Inputs: {fileID: 6259364941133615106}
   tempAxePrefab: {fileID: 8814004972467976107, guid: 1445855dd6e0ac64f8ee19e841b312a7,
     type: 3}
+  equipableObjects:
+  - {fileID: 8814004972467976107, guid: 1445855dd6e0ac64f8ee19e841b312a7, type: 3}
 --- !u!114 &6259364941133615106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,7 +218,7 @@ MonoBehaviour:
   m_iLootCountMin: 1
   m_iLootCountMax: 1
   m_iLootItem: {fileID: 0}
-  m_iCurrentHP: 0
+  m_fCurrentHP: 0
   m_fCurrentSpeed: 0
   m_fCurrentAttackStrength: 0
   m_fCurrentAttackRange: 0

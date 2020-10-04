@@ -14,7 +14,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
-public class PartyInventory : MonoBehaviour
+public class PartyInventory : NetworkBehaviour
 {
 	public ScriptableObjects.Blueprint m_tempUnlockRecipe; 	//TODO: Remove
 	
@@ -36,7 +36,9 @@ public class PartyInventory : MonoBehaviour
 		}
 	}
 
+	[SyncVar]
 	private List<ScriptableObjects.Blueprint> m_unlockedBlueprints = new List<ScriptableObjects.Blueprint>();	//< The blueprints that has been unlocked 
+	[SyncVar]
 	private Dictionary<string, int> m_resources = new Dictionary<string, int>();	// The amount of resources of each type (by name) that the party has
 
 	/// <summary>
@@ -47,6 +49,7 @@ public class PartyInventory : MonoBehaviour
 		get { return m_resources;  }
 	}
 	
+	[SyncVar]
 	private static PartyInventory m_instance;	// Singleton instance
 	/// <summary>
 	/// Instance of the party inventory
@@ -57,6 +60,7 @@ public class PartyInventory : MonoBehaviour
 	}
 
 	[SerializeField]
+	[SyncVar]
 	[Tooltip("The array of resources (items) that are available in this game")]
 	private List<ScriptableObjects.Item> m_availableResources = new List<ScriptableObjects.Item>();
 

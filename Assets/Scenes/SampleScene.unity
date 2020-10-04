@@ -299,6 +299,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6865829353436254795, guid: bb099eb40c611f14987123f66007d05d,
+        type: 3}
+      propertyPath: sceneId
+      value: 3707684248
+      objectReference: {fileID: 0}
+    - target: {fileID: 6865829353436254795, guid: bb099eb40c611f14987123f66007d05d,
+        type: 3}
+      propertyPath: m_AssetId
+      value: bb099eb40c611f14987123f66007d05d
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb099eb40c611f14987123f66007d05d, type: 3}
 --- !u!1 &565346440
@@ -331,7 +341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 141a2a8092e41d84db6ea04f1c3edc8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_timeBeforeEndInSeconds: 360
+  m_gameManager: {fileID: 0}
   m_finalLightIntensity: 0.3
   m_finalSkyTint: {r: 0.254717, g: 0.254717, b: 0.254717, a: 1}
   m_finalSkyGround: {r: 0.1509434, g: 0.1509434, b: 0.1509434, a: 1}

@@ -6,7 +6,8 @@ using UnityEngine.Events;
 
 public class NightFall : MonoBehaviour
 {
-	public float m_timeBeforeEndInSeconds = 60;
+	public GameManager m_gameManager;
+	// public float m_timeBeforeEndInSeconds = 60;
 	public float m_finalLightIntensity;
 	public Color m_finalSkyTint;
 	public Color m_finalSkyGround;
@@ -72,8 +73,8 @@ public class NightFall : MonoBehaviour
 	{
 		if (m_executing)
 		{
-			float timeSinceStart = Time.time - m_startTime;
-			float percentage = timeSinceStart / m_timeBeforeEndInSeconds;
+			// float timeSinceStart = Time.time - m_startTime;
+			float percentage = m_gameManager.LoopTime / m_gameManager.LoopDuration;
 
 			if (percentage >= 1f)
 			{

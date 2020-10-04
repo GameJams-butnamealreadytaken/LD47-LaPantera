@@ -27,21 +27,27 @@ public class PlayerController : NetworkBehaviour
 	private bool bWalking = false;
 	private bool bInteracting = false;
 
-	private bool bResetInputs = true;
-	
-	void Start()
-	{
-		rb = GetComponent<Rigidbody>();
-		animator = GetComponentInChildren<Animator>();
-		
-		handBone = animator.GetBoneTransform(HumanBodyBones.RightHand);
-		Assert.IsNotNull(handBone);
-		
-		if (!hasAuthority || !isLocalPlayer)
-		{
-			Inputs.DeactivateInput();
-			return;
-		}
+    private bool bResetInputs = true;
+    
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+        animator = GetComponentInChildren<Animator>();
+        
+        handBone = animator.GetBoneTransform(HumanBodyBones.RightHand);
+        Assert.IsNotNull(handBone);
+        
+        if (!hasAuthority || !isLocalPlayer)
+        {
+            Inputs.DeactivateInput();
+
+            if (equippedObject != null)
+            {
+                OnEquippedObjectChanged(null, equippedObject);
+            }
+            
+            return;
+        }
 
 		Camera.main.gameObject.GetComponent<CameraManager>().PlayerTarget = gameObject;
 		

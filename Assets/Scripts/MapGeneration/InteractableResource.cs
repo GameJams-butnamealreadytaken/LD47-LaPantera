@@ -20,6 +20,7 @@ public class InteractableResource : NetworkBehaviour
         
     }
     
+    [Server]
     public void Gather()
     {
         List<GameObject> spawnedObjects = resourceDescriptor.Spawn(this.transform.position, 1);
@@ -33,7 +34,12 @@ public class InteractableResource : NetworkBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    {        
+    {
+        if (!GetComponent<NetworkIdentity>().isServer)
+        {
+            return;
+        }
+        
         Item item = other.gameObject.GetComponent<Item>();
 
         if (item == null)

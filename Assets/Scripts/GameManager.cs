@@ -7,20 +7,22 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : NetworkBehaviour
 {
-    public float LoopTime = 3.0f;
+	public float LoopDuration = 6.0f;
+	public float LoopTime = 3.0f;
 
-    void Start()
-    {
-    }
+	void Start()
+	{
+		LoopTime = LoopDuration;
+	}
 
-    void Update()
-    {
-        LoopTime -= Time.deltaTime;
+	void Update()
+	{
+		LoopTime -= Time.deltaTime;
 
-        if (LoopTime <= 0.0f)
-        {
-            NetworkManager manager = GameObject.FindObjectOfType<NetworkManager>();
-            manager.ServerChangeScene(NetworkManager.networkSceneName);
-        }
-    }
+		if (LoopTime <= 0.0f)
+		{
+			NetworkManager manager = GameObject.FindObjectOfType<NetworkManager>();
+			manager.ServerChangeScene(NetworkManager.networkSceneName);
+		}
+	}
 }

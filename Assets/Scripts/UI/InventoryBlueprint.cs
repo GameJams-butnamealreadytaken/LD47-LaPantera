@@ -21,6 +21,21 @@ public class InventoryBlueprint : MonoBehaviour
 		[Tooltip("The sprite when the blueprint is locked")]
 		public Sprite m_lockedSprite;
 
+		private bool m_isUnlocked = false;
+		[SerializeField]
+		private InventoryCraftRequiredResource[] m_inventoryRequiredResources = new InventoryCraftRequiredResource[4];
+
+		/// <summary>
+		/// The array of InventoryCraftRequiredResource that are used to display the required resources for a blueprint
+		/// </summary>
+		public InventoryCraftRequiredResource[] RequiredResourcesDisplay
+		{
+			get
+			{
+				return m_inventoryRequiredResources;
+			}
+		}
+
 	#endregion
 	
 	#region Methods
@@ -31,7 +46,7 @@ public class InventoryBlueprint : MonoBehaviour
 		//
 		// We ensure the blueprint is set
 		Assert.IsNotNull(m_blueprint, "A blueprint in the inventory has not blueprint data ! (" + transform.name + ")");
-		
+
 		//
 		// Set the blueprint icon
 		SetIcon();
@@ -42,7 +57,10 @@ public class InventoryBlueprint : MonoBehaviour
 	{
 		//
 		// Set the blueprint icon
-		SetIcon();
+		if (!m_isUnlocked)
+		{
+			SetIcon();
+		}
 	}
 	
 	// Private
@@ -67,6 +85,27 @@ public class InventoryBlueprint : MonoBehaviour
 			else
 			{
 				GetComponent<Image>().sprite = m_blueprint.GetIcon();	// display the blueprint icon
+				m_isUnlocked = true;	//< Unlock the blueprint (this will prevent from updating the icon every frame)
+				
+				//
+				//
+				if (m_blueprint.RecipeItems.Length > 4)
+				{
+					Debug.LogError("WARNING : The recipe (" + m_blueprint.name + ") has more than 4 recipe elements !");
+				}
+				
+				//
+				// Call all the InventoryCraftRequiredResource to det the required resources
+				for (int requiredResourceIndex = 0; requiredResourceIndex < m_blueprint.RecipeItems.Length; ++requiredResourceIndex)
+				{
+					if (requiredResourceIndex >= 4)
+					{
+						break;	// just in case there are more than 4 ingredients, we do not access the 5th element because there are only 5 requiredResource element
+					}
+					RequiredResourcesDisplay[requiredResourceIndex].SetContent(m_blueprint.RecipeItems[requiredResourceIndex]
+						, PartyInventory.Instance.HasEnoughResources(m_blueprint.RecipeItems[requiredResourceIndex].m_item, m_blueprint.RecipeItems[requiredResourceIndex].m_quantity)
+						);	// Todo: 
+				}
 			}
 		}
 	}

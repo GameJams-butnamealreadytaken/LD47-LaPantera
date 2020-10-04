@@ -32,22 +32,59 @@ public class InventoryCraft : MonoBehaviour
 		void Update()
 		{
 			//
+			// 
+			bool bTextSet = false;
 			//
-			ScriptableObjects.Blueprint selectedBlueprint = EventSystem.current.currentSelectedGameObject
-				.GetComponentInChildren<InventoryBlueprint>().m_blueprint;
+			// First we ensure there is a gameobject selected
+			GameObject selected = EventSystem.current.currentSelectedGameObject;
+			if (null != selected)
+			{
+				//
+				// We ensure the selected gameobject has an inventory blueprint
+				InventoryBlueprint inventoryBlueprint = selected.GetComponentInChildren<InventoryBlueprint>();
+				if (null != inventoryBlueprint)
+				{
+					//
+					// We can retrieve the blueprint
+					ScriptableObjects.Blueprint selectedBlueprint = inventoryBlueprint.m_blueprint;
+					
+					//
+					// If the blueprint is not null we can set its description
+					if (null != selectedBlueprint)
+					{
+						//
+						// update the description text depending on the current selected blueprint
+						// If the blueprint is not unlocked, we simply display "???", otherwise we display the description
+						// of the blueprint (which in fact is the description of the produced item)
+						if (selectedBlueprint.StartLocked && !PartyInventory.Instance.IsBlueprintUnlocked(selectedBlueprint))
+						{
+							m_descriptionText.text = "???";
+							bTextSet = true;
+						}
+						else
+						{
+							m_descriptionText.text = EventSystem.current.currentSelectedGameObject
+								.GetComponentInChildren<InventoryBlueprint>().m_blueprint.Description;
+							bTextSet = true;
+						}
+					}
+				}
+			}
 			
 			//
-			// update the description text depending on the current selected blueprint
-			// If the blueprint is not unlocked, we simply display "???", otherwise we display the description
-			// of the blueprint (which in fact is the description of the produced item)
-			if (selectedBlueprint.StartLocked && !PartyInventory.Instance.IsBlueprintUnlocked(selectedBlueprint))
+			// Set the text to null in case there is a problem and we don't set the text
+			if (!bTextSet)
 			{
-				m_descriptionText.text = "???";
-			}
-			else
-			{
-				m_descriptionText.text = EventSystem.current.currentSelectedGameObject
-					.GetComponentInChildren<InventoryBlueprint>().m_blueprint.Description;
+				// 
+				// If we are in debug we display an error, otherwise we display nothing
+				if (Debug.isDebugBuild)
+				{
+					m_descriptionText.text = "THERE IS A PROBLEM IN THE CRAFT INVENTORY";	// In debug we indicate there is an error
+				}
+				else
+				{
+					m_descriptionText.text = "";	//< Not in debug we put nothing
+				}
 			}
 		}
 	

@@ -60,11 +60,25 @@ namespace ScriptableObjects
 		[SerializeField]
 		[Tooltip("The elements needed for the recipe")]
 		private RecipeElement[] m_recipeElements;
+		/// <summary>
+		/// All the elements needed for the recipe
+		/// </summary>
+		public RecipeElement[] RecipeItems
+		{
+			get { return m_recipeElements; }
+		}
 	
 		[Header("Product")] 
 		[SerializeField]
 		[Tooltip("The produced item")]
 		private Item m_produced;
+		/// <summary>
+		/// The item produced by this blueprint
+		/// </summary>
+		public Item Product
+		{
+			get { return m_produced;  }
+		}
 	
 	#endregion
 

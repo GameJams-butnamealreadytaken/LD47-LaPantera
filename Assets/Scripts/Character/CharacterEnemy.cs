@@ -69,6 +69,7 @@ public class CharacterEnemy : BaseCharacter
 		Assert.IsNotNull(m_animator);
 }
 
+#if UNITY_EDITOR
 	void OnDrawGizmos()
 	{
 		if (m_bShowAggroRadius)
@@ -89,6 +90,7 @@ public class CharacterEnemy : BaseCharacter
 			UnityEditor.Handles.DrawLine(transform.position, transform.position + m_vDirection * 3.0f);
 		}
 	}
+#endif // UNITY_EDITOR
 
 	[Server]
 	private void FixedUpdate()

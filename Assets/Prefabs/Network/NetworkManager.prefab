@@ -77,6 +77,7 @@ MonoBehaviour:
   - {fileID: 683027840691986437, guid: fdf6e85c23c66a74f835b7d28b20a1fd, type: 3}
   - {fileID: 2704670136739478467, guid: 00f8a2bb68a7c4d42a119b36ef78b2ea, type: 3}
   - {fileID: 8679482770784958593, guid: 64fc7c568ee8a4d44ab53ff2c225bd81, type: 3}
+  - {fileID: 8814004972467976107, guid: 35caf45206cc44940b5a84e85f9f4a3e, type: 3}
   m_PlayerManager: {fileID: 3994246905356940803}
 --- !u!114 &8601594274173722659
 MonoBehaviour:

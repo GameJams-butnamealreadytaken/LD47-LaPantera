@@ -109,9 +109,8 @@ MonoBehaviour:
   CharacterPlayer: {fileID: 7677215233132127867}
   PlayerAudioListener: {fileID: 0}
   Inputs: {fileID: 6259364941133615106}
-  tempAxePrefab: {fileID: 8814004972467976107, guid: 1445855dd6e0ac64f8ee19e841b312a7,
-    type: 3}
   equipableObjects:
+  - {fileID: 8814004972467976107, guid: 35caf45206cc44940b5a84e85f9f4a3e, type: 3}
   - {fileID: 8814004972467976107, guid: 1445855dd6e0ac64f8ee19e841b312a7, type: 3}
 --- !u!114 &6259364941133615106
 MonoBehaviour:

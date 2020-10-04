@@ -65,7 +65,26 @@ MonoBehaviour:
   m_strName: EnemyManager
   m_aSpawnLocations:
   - {x: 0, y: 5}
-  m_fSpawnRadius: 0
+  - {x: 20, y: 20}
+  - {x: 17, y: 30}
+  - {x: 60, y: 10}
+  - {x: 10, y: 70}
+  - {x: 100, y: 5}
+  - {x: 5, y: 100}
+  - {x: 200, y: 10}
+  - {x: 300, y: 300}
+  - {x: 350, y: 350}
+  - {x: 200, y: 150}
+  - {x: 150, y: 390}
+  - {x: 200, y: 50}
+  - {x: 17, y: 40}
+  - {x: 98, y: 320}
+  - {x: 320, y: 98}
+  - {x: 180, y: 60}
+  - {x: 60, y: 220}
+  - {x: 160, y: 20}
+  - {x: 20, y: 160}
+  m_fSpawnRadius: 10
   m_mapCharacterToPrefab:
   - {fileID: 0}
   - {fileID: 0}

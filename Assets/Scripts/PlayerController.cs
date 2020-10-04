@@ -28,6 +28,7 @@ public class PlayerController : NetworkBehaviour
 	private bool bInteracting = false;
 
     private bool bResetInputs = true;
+    private GameObject oldEquippedObject = null;
     
     void Start()
     {
@@ -41,11 +42,6 @@ public class PlayerController : NetworkBehaviour
         {
             Inputs.DeactivateInput();
 
-            if (equippedObject != null)
-            {
-                OnEquippedObjectChanged(null, equippedObject);
-            }
-            
             return;
         }
 
@@ -74,14 +70,21 @@ public class PlayerController : NetworkBehaviour
 			return;
 		}
 
-		bInteracting = true;
-		animator.SetBool("Interact", true);
-	}
-	
-	void FixedUpdate()
-	{
-		if (!hasAuthority || !isLocalPlayer)
-			return;
+        bInteracting = true;
+        animator.SetBool("Interact", true);
+    }
+    
+    void FixedUpdate()
+    {
+        if (!hasAuthority || !isLocalPlayer)
+        {
+            if (oldEquippedObject != equippedObject)
+            {
+                OnEquippedObjectChanged(oldEquippedObject, equippedObject);
+            }
+            
+            return;
+        }
 
 		float fHorizontal = InputMoveValues.x;
 		float fVertical = InputMoveValues.y;
@@ -92,31 +95,31 @@ public class PlayerController : NetworkBehaviour
 			rb.velocity = new Vector3(fHorizontal * fSpeed, rb.velocity.y, fVertical * fSpeed);
 
 			float fAngle = 0.0f;
-			if (fHorizontal >= 0.7f)
+			if (fHorizontal >= 0.1f)
 			{
 				fAngle = 90.0f;
-				if (fVertical >= 0.7f)
+				if (fVertical > 0.0f)
 				{
 					fAngle -= 45.0f;
 				}
-				else if (fVertical <= -0.7f)
+				else if (fVertical < -0.0f)
 				{
 					fAngle += 45.0f;
 				}
 			}
-			else if (fHorizontal <= -0.7f)
+			else if (fHorizontal < -0.0f)
 			{
 				fAngle = -90.0f;
-				if (fVertical >= 0.7f)
+				if (fVertical > 0.0f)
 				{
 					fAngle += 45.0f;
 				}
-				else if (fVertical <= -0.7f)
+				else if (fVertical < -0.0f)
 				{
 					fAngle -= 45.0f;
 				}
 			}
-			else if(fVertical == -1.0f)
+			else if(fVertical < 0.0f)
 			{
 				fAngle = -180.0f;
 			}
@@ -129,6 +132,7 @@ public class PlayerController : NetworkBehaviour
 		}
 		else if (bWalking)
 		{
+			rb.velocity = Vector3.zero;
 			animator.SetBool("Walking", false);
 			bWalking = false;
 		}
@@ -174,15 +178,15 @@ public class PlayerController : NetworkBehaviour
 		equippedObject = spawnedObject;
 	}
 
-	[Client]
-	private void OnEquippedObjectChanged(GameObject oldEquippedObject, GameObject newEquippedObject)
-	{
-		if (!GetComponent<NetworkIdentity>().isServer && equippedObject != null)
-		{
-			equippedObject.transform.position = handBone.position;
-			equippedObject.transform.rotation = handBone.rotation;
-			equippedObject.transform.localScale = Vector3.one;
-			equippedObject.transform.SetParent(handBone);   
-		}
-	}
+    [Client]
+    private void OnEquippedObjectChanged(GameObject oldEquippedObject, GameObject newEquippedObject)
+    {
+        if (!GetComponent<NetworkIdentity>().isServer && equippedObject != null)
+        {
+            equippedObject.transform.position = handBone.position;
+            equippedObject.transform.rotation = handBone.rotation;
+            equippedObject.transform.localScale = Vector3.one;
+            equippedObject.transform.SetParent(handBone);   
+        }
+    }
 }

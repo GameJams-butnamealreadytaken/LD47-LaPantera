@@ -46,6 +46,9 @@ public class MapGenerator : NetworkBehaviour
 
     [Tooltip("Objects that must be spawned in the map")]
     public List<GameObject> specialObjects;
+
+	[Header("Enemies")]
+	public List<int> aEnemyClusters;
     
     // Start is called before the first frame update
     void Start()
@@ -94,10 +97,13 @@ public class MapGenerator : NetworkBehaviour
 		//
 		// Spawn enemies
 		Assert.IsNotNull(m_enemyManager);
-		List<BaseCharacter> enemies = new List<BaseCharacter>();
-		if (m_enemyManager.SpawnCharacters(ECharacterType.enemy_zombie, 10, ref enemies))
+		foreach(int iClusterCount in aEnemyClusters)
 		{
-			Debug.Log("Spawn success");
+			List<BaseCharacter> enemies = new List<BaseCharacter>();
+			if (m_enemyManager.SpawnCharacters(ECharacterType.enemy_zombie, iClusterCount, ref enemies))
+			{
+				Debug.Log("Spawn success");
+			}
 		}
 	}
 

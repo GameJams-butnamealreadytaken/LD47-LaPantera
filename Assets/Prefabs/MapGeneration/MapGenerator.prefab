@@ -80,6 +80,7 @@ MonoBehaviour:
   - biome: {fileID: 7834664173640018586, guid: c07c0e6ee6ee2df46ad99d861471fa2c, type: 3}
     spawnProbability: 0.2
   specialObjects: []
+  aEnemyClusters: 01000000
 --- !u!1001 &287776856413632288
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -66,7 +66,7 @@ public class CharacterEnemy : BaseCharacter
 		m_agent = GetComponent<NavMeshAgent>();
 		Assert.IsNotNull(m_agent);
 		m_agent.updateRotation = true;
-		m_agent.acceleration = 1.0f;
+		m_agent.acceleration = 60.0f;
 		m_fMaxIdleToWalkThresholdRandom = Random.Range(m_iMaxIdleToWalkThreshold * 0.5f, m_iMaxIdleToWalkThreshold);
 
 		m_animator = GetComponent<Animator>();
@@ -176,9 +176,17 @@ public class CharacterEnemy : BaseCharacter
 		// Attacking
 		else if(Status.attacking == m_eStatusToProcess)
 		{
-			if(m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+			if(m_characterAggroed.GetCurrentHP() > 0.0f)
 			{
-				m_characterAggroed.TakeDamage(m_fCurrentAttackStrength);
+				if (m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+				{
+					m_characterAggroed.TakeDamage(m_fCurrentAttackStrength);
+				}
+			}
+			else
+			{
+				SetAggroedCharacter(null);
+				SetStatus(Status.idle);
 			}
 		}
 		else 

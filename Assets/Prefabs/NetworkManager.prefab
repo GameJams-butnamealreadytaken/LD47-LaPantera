@@ -50,8 +50,8 @@ MonoBehaviour:
   autoStartServerBuild: 1
   showDebugMessages: 0
   serverTickRate: 30
-  offlineScene: 
-  onlineScene: 
+  offlineScene: Assets/Scenes/OfflineScene.unity
+  onlineScene: Assets/Scenes/SampleScene.unity
   transport: {fileID: 5062026942184130564}
   networkAddress: localhost
   maxConnections: 4
@@ -71,6 +71,7 @@ MonoBehaviour:
   - {fileID: 4487416772883780151, guid: edeb0a2c7637c414f89af6faff6b2885, type: 3}
   - {fileID: 7457923360753986894, guid: 9b0a2cc3ac446a04eba2e30ed3bbdc24, type: 3}
   - {fileID: 8814004972467976107, guid: 1445855dd6e0ac64f8ee19e841b312a7, type: 3}
+  - {fileID: 5713671792225816225, guid: bb099eb40c611f14987123f66007d05d, type: 3}
 --- !u!114 &5062026942184130564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,6 +126,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6442dc8070ceb41f094e44de0bf87274, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showGUI: 1
+  showGUI: 0
   offsetX: 0
   offsetY: 0

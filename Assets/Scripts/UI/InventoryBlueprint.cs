@@ -70,6 +70,10 @@ public class InventoryBlueprint : MonoBehaviour
 	/// </summary>
 	private void SetIcon()
 	{
+		if (!PartyInventory.Instance)
+		{
+			return;
+		}
 		//
 		// Set the blueprint icon
 		if (null != m_blueprint)

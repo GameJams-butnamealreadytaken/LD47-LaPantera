@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -807,16 +807,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3584987441630715788, guid: acaee4681b2aa944981540787ba1cad6,
-        type: 3}
-      propertyPath: onlineScene
-      value: Assets/Scenes/SampleScene.unity
-      objectReference: {fileID: 0}
-    - target: {fileID: 3584987441630715788, guid: acaee4681b2aa944981540787ba1cad6,
-        type: 3}
-      propertyPath: offlineScene
-      value: Assets/Scenes/OfflineScene.unity
-      objectReference: {fileID: 0}
     - target: {fileID: 3737576387049035833, guid: acaee4681b2aa944981540787ba1cad6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -876,11 +866,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: NetworkManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 8811062198862048894, guid: acaee4681b2aa944981540787ba1cad6,
-        type: 3}
-      propertyPath: showGUI
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: acaee4681b2aa944981540787ba1cad6, type: 3}

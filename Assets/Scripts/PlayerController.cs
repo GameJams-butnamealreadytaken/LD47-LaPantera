@@ -76,6 +76,19 @@ public class PlayerController : NetworkBehaviour
     
     void FixedUpdate()
     {
+	    if (GetComponent<NetworkIdentity>().isServer)
+	    {
+		    if (animator.GetCurrentAnimatorStateInfo(0).IsName("Interact"))
+		    {
+			    float normalizedTime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+		    
+			    if (equippedObject != null)
+			    {
+				    equippedObject.GetComponent<Item>().SetIsInInteractFrame(normalizedTime >= 0.33f && normalizedTime <= 0.80f);
+			    }   
+		    }
+	    }
+	    
         if (!hasAuthority || !isLocalPlayer)
         {
             if (oldEquippedObject != equippedObject)
@@ -137,8 +150,7 @@ public class PlayerController : NetworkBehaviour
 			bWalking = false;
 		}
 
-		if (animator.GetCurrentAnimatorStateInfo(0).IsName("Interact") &&
-			animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+		if (animator.GetCurrentAnimatorStateInfo(0).IsName("Interact") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
 		{
 			bInteracting = false;
 			animator.SetBool("Interact", false);

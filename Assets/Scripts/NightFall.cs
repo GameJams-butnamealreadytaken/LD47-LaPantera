@@ -74,7 +74,7 @@ public class NightFall : MonoBehaviour
 		if (m_executing)
 		{
 			// float timeSinceStart = Time.time - m_startTime;
-			float percentage = m_gameManager.LoopTime / m_gameManager.LoopDuration;
+			float percentage = 1 - m_gameManager.LoopTime / m_gameManager.LoopDuration;
 
 			if (percentage >= 1f)
 			{

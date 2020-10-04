@@ -66,7 +66,7 @@ public class CharacterEnemy : BaseCharacter
 		m_agent = GetComponent<NavMeshAgent>();
 		Assert.IsNotNull(m_agent);
 		m_agent.updateRotation = true;
-		m_agent.acceleration = 1.0f;
+		m_agent.acceleration = 60.0f;
 		m_fMaxIdleToWalkThresholdRandom = Random.Range(m_iMaxIdleToWalkThreshold * 0.5f, m_iMaxIdleToWalkThreshold);
 
 		m_animator = GetComponent<Animator>();

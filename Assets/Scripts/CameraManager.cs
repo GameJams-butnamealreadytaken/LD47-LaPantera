@@ -6,6 +6,10 @@ public class CameraManager : MonoBehaviour
 {
     public GameObject PlayerTarget;
 
+    public float YDistance = 10.0f;
+    public float ZDistance = -10.0f;
+    public float XRotation = 35.0f;
+
     void Start()
     {
     }
@@ -16,8 +20,8 @@ public class CameraManager : MonoBehaviour
             return;
 
         Vector3 vCameraLoc = PlayerTarget.transform.position;
-        vCameraLoc.y += 6.0f;
-        vCameraLoc.z -= 6.0f;
+        vCameraLoc.y += YDistance;
+        vCameraLoc.z += ZDistance;
 
         transform.position = vCameraLoc;
         transform.rotation = Quaternion.AngleAxis(35.0f, Vector3.right);

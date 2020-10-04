@@ -96,9 +96,15 @@ public class CharacterEnemy : BaseCharacter
 	}
 #endif // UNITY_EDITOR
 
-	[Server]
 	private void FixedUpdate()
 	{
+		if (!isServer)
+			return;
+
+		//
+		// Only server below
+
+
 		m_agent.speed = GetCurrentSpeed();
 		m_agent.angularSpeed = GetCurrentSpeed();
 

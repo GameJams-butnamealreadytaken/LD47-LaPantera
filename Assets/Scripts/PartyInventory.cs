@@ -40,6 +40,8 @@ public class PartyInventory : NetworkBehaviour
 		}
 	}
 
+	[SyncVar]
+	public int m_monInteger;
 
 	private SyncListBlueprints m_unlockedBlueprints = new SyncListBlueprints();	//< The blueprints that has been unlocked 
 	private SyncDictionaryResources m_resources = new SyncDictionaryResources();	// The amount of resources of each type (by name) that the party has
@@ -96,6 +98,7 @@ public class PartyInventory : NetworkBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
+		m_monInteger = 0;
 	}
 
 	// Update is called once per frame
@@ -110,6 +113,7 @@ public class PartyInventory : NetworkBehaviour
 	/// <param name="_amount">The amount of items to credit</param>
 	public void CreditResource(ScriptableObjects.Item _creditedItem, int _amount = 1)
 	{
+		m_monInteger++;
 		m_resources[_creditedItem.name] += _amount;
 	}
 
@@ -120,6 +124,7 @@ public class PartyInventory : NetworkBehaviour
 	/// <param name="_amount">The amount of items to uncredit</param>
 	public void UnCreditResource(ScriptableObjects.Item _creditedItem, int _amount = 1)
 	{
+		m_monInteger++;
 		m_resources[_creditedItem.name] -= _amount;
 		if (m_resources[_creditedItem.name] < 0)
 		{

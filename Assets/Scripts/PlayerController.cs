@@ -28,6 +28,7 @@ public class PlayerController : NetworkBehaviour
     private bool bInteracting = false;
 
     private bool bResetInputs = true;
+    private GameObject oldEquippedObject = null;
     
     void Start()
     {
@@ -41,11 +42,6 @@ public class PlayerController : NetworkBehaviour
         {
             Inputs.DeactivateInput();
 
-            if (equippedObject != null)
-            {
-                OnEquippedObjectChanged(null, equippedObject);
-            }
-            
             return;
         }
 
@@ -78,7 +74,14 @@ public class PlayerController : NetworkBehaviour
     void FixedUpdate()
     {
         if (!hasAuthority || !isLocalPlayer)
+        {
+            if (oldEquippedObject != equippedObject)
+            {
+                OnEquippedObjectChanged(oldEquippedObject, equippedObject);
+            }
+            
             return;
+        }
 
         float fHorizontal = InputMoveValues.x;
         float fVertical = InputMoveValues.y;
@@ -179,7 +182,9 @@ public class PlayerController : NetworkBehaviour
             equippedObject.transform.position = handBone.position;
             equippedObject.transform.rotation = handBone.rotation;
             equippedObject.transform.localScale = Vector3.one;
-            equippedObject.transform.SetParent(handBone);   
+            equippedObject.transform.SetParent(handBone);
+
+            this.oldEquippedObject = newEquippedObject;
         }
     }
 }

@@ -7,14 +7,18 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : NetworkBehaviour
 {
-	public float LoopDuration = 6.0f;
-	public float LoopTime = 3.0f;
+	[SyncVar]
+	public float LoopDuration = 300.0f;
+	[SyncVar]
+	public float LoopTime = 300.0f;
 
+	[Server]
 	void Start()
 	{
 		LoopTime = LoopDuration;
 	}
 
+	[Server]
 	void Update()
 	{
 		LoopTime -= Time.deltaTime;

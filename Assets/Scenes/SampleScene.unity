@@ -1319,6 +1319,11 @@ PrefabInstance:
       propertyPath: sceneId
       value: 1411840896
       objectReference: {fileID: 0}
+    - target: {fileID: 429939620239816514, guid: dadc118306839d2459f40f98009d8225,
+        type: 3}
+      propertyPath: serverOnly
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1029889099539434469, guid: dadc118306839d2459f40f98009d8225,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1377,7 +1382,17 @@ PrefabInstance:
     - target: {fileID: 3909690019830883927, guid: dadc118306839d2459f40f98009d8225,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3909690019830883927, guid: dadc118306839d2459f40f98009d8225,
+        type: 3}
+      propertyPath: LoopDuration
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3909690019830883927, guid: dadc118306839d2459f40f98009d8225,
+        type: 3}
+      propertyPath: LoopTime
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7658627307384375499, guid: dadc118306839d2459f40f98009d8225,
         type: 3}
@@ -1398,7 +1413,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 1734011290}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae6a867479c02944a807b9dace2487eb, type: 3}
   m_Name: 

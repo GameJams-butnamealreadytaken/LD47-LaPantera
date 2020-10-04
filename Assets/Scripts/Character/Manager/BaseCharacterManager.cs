@@ -117,4 +117,9 @@ public abstract class BaseCharacterManager : NetworkBehaviour
 	{
 		return m_aCharacters;
 	}
+
+	public List<Vector2> GetSpawLocations()
+	{
+		return m_aSpawnLocations;
+	}
 }

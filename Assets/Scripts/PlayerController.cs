@@ -40,6 +40,12 @@ public class PlayerController : NetworkBehaviour
         if (!hasAuthority || !isLocalPlayer)
         {
             Inputs.DeactivateInput();
+
+            if (equippedObject != null)
+            {
+                OnEquippedObjectChanged(null, equippedObject);
+            }
+            
             return;
         }
 

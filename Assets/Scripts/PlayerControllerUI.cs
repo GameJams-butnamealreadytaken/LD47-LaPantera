@@ -110,6 +110,11 @@ public class PlayerControllerUI : MonoBehaviour
 		}
 	}
 
+	public bool IsInInventory()
+	{
+		return m_playerUI.CurrentState == PlayerUI.State.inventory;
+	}
+
 	public void OnCraft()
 	{
 		m_playerUI.Craft();

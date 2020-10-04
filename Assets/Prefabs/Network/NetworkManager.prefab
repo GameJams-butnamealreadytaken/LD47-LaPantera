@@ -73,6 +73,8 @@ MonoBehaviour:
   - {fileID: 7457923360753986894, guid: 9b0a2cc3ac446a04eba2e30ed3bbdc24, type: 3}
   - {fileID: 8814004972467976107, guid: 1445855dd6e0ac64f8ee19e841b312a7, type: 3}
   - {fileID: 5713671792225816225, guid: bb099eb40c611f14987123f66007d05d, type: 3}
+  - {fileID: 6862486736550504900, guid: f9df2880ca460be4eb0e5287895d60f3, type: 3}
+  - {fileID: 683027840691986437, guid: fdf6e85c23c66a74f835b7d28b20a1fd, type: 3}
   m_PlayerManager: {fileID: 3994246905356940803}
 --- !u!114 &8601594274173722659
 MonoBehaviour:

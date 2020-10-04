@@ -44,6 +44,6 @@ public class ServerConnectGUI : MonoBehaviour
 
 	public void Exit()
 	{
-		
+		Application.Quit();
 	}
 }

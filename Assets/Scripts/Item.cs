@@ -13,6 +13,8 @@ public class Item : MonoBehaviour
 
 	[Header("Data")] 
 	public ScriptableObjects.Item m_item;	//< The item data of this item
+
+	private bool m_isInInteractFrame = false;
 	
 	// Start is called before the first frame update
 	void Start()
@@ -24,5 +26,15 @@ public class Item : MonoBehaviour
 	void Update()
 	{
 		
+	}
+
+	public void SetIsInInteractFrame(bool isInInteractFrame)
+	{
+		m_isInInteractFrame = isInInteractFrame;
+	}
+
+	public bool IsInInteractFrame()
+	{
+		return m_isInInteractFrame;
 	}
 }

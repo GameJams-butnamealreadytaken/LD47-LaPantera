@@ -18,24 +18,24 @@ public class BaseCharacter : NetworkBehaviour
 
 	[Header("Characteristics")]
 	public int m_iMaxHP = 5;
-	public int m_fSpeed = 10;
-	public int m_fAttackStrength = 1;
-	public int m_fAttackRange = 3;
+	public float m_fSpeed = 10;
+	public float m_fAttackStrength = 1;
+	public float m_fAttackRange = 3;
 
 	[Header("Loot")]
 	public int m_iLootCountMin = 1;
 	public int m_iLootCountMax = 1;
 	public ScriptableObjects.Item m_iLootItem;
 
-
+	[Header("Characteristics overriden")]
 	[SyncVar]
-	private int m_iCurrentHP;
+	public int m_iCurrentHP;
 	[SyncVar]
-	private float m_fCurrentSpeed;
+	public float m_fCurrentSpeed;
 	[SyncVar]
-	private float m_fCurrentAttackStrength;
+	public float m_fCurrentAttackStrength;
 	[SyncVar]
-	private float m_fCurrentAttackRange;
+	public float m_fCurrentAttackRange;
 	[SyncVar]
 	private string m_strName;
 	[SyncVar]
@@ -44,11 +44,10 @@ public class BaseCharacter : NetworkBehaviour
 	// Start is called before the first frame update
 	protected void Start()
     {
-		if (hasAuthority)
-			ResetCharacteristicsToInitialValues();
+		ResetCharacteristicsToInitialValues();
 	}
 
-	[Command]
+	[Server]
 	public void ResetCharacteristicsToInitialValues()
 	{
 		//

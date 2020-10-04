@@ -47,11 +47,17 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   m_tempUnlockRecipe: {fileID: 11400000, guid: 819ef76e6095db344b5478806d2d54e3, type: 2}
+  m_monInteger: 0
   m_availableResources:
   - {fileID: 11400000, guid: 1bd46e9c6500aa841bf60cf7ef19c0bf, type: 2}
   - {fileID: 11400000, guid: 051dfeccfc9ed324e9b93732db3ca49a, type: 2}
   - {fileID: 11400000, guid: eee391dee49634a42a4d998c2a848b3f, type: 2}
-  - {fileID: 11400000, guid: adce35c44e827174988f4cfa8c05a4fc, type: 2}
+  - {fileID: 11400000, guid: f2b1e1cec95a9c043919e7253cb20a28, type: 2}
+  - {fileID: 11400000, guid: e29fc71f7f5f5c941a9927e324849218, type: 2}
+  - {fileID: 11400000, guid: 99c715a41d3bad24694361fbf8065d5e, type: 2}
+  - {fileID: 11400000, guid: ec55dd675464fb743b31096794171b44, type: 2}
+  - {fileID: 11400000, guid: 8c7f7892752042a42be0822511c88069, type: 2}
+  - {fileID: 11400000, guid: bc0fad5f0b847e04785aae3c91d5eb19, type: 2}
   m_tmpWood: {fileID: 11400000, guid: 1bd46e9c6500aa841bf60cf7ef19c0bf, type: 2}
   m_tmpRock: {fileID: 11400000, guid: 051dfeccfc9ed324e9b93732db3ca49a, type: 2}
 --- !u!114 &6865829353436254795

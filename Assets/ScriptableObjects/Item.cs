@@ -36,6 +36,12 @@ namespace ScriptableObjects
 		[Tooltip("The type of this item")] 
 		public Type m_type;
 
+		[Tooltip("Damage if the item is a weapon")]
+		public int m_damage;
+
+		[Tooltip("Life if the item is a resource")]
+		public int m_life;
+
 		[Header("Visual")]
 		[Tooltip("The icon of the item")]
 		public Sprite m_icon;

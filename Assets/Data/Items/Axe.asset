@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f257d82d7002e9f4abea511bec907e90, type: 3}
-  m_Name: Hand
+  m_Name: Axe
   m_EditorClassIdentifier: 
-  m_name: Hand
-  m_description: An hand
+  m_name: Axe
+  m_description: An axe to chop trees
   m_type: 2
-  m_damage: 1
+  m_damage: 5
   m_life: 0
   m_icon: {fileID: 21300000, guid: b931587800e08c54aa8dbbd6c15c894f, type: 3}
   m_prefab: {fileID: 0}

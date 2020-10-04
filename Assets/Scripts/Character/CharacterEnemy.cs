@@ -135,7 +135,7 @@ public class CharacterEnemy : BaseCharacter
 					m_fMaxIdleToWalkThresholdRandom = Random.Range(m_iMaxIdleToWalkThreshold * 0.5f, m_iMaxIdleToWalkThreshold);
 				}
 			}
-			else if(Status.dying == m_eStatus && m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+			else if(Status.dying == m_eStatus && m_animator.GetCurrentAnimatorStateInfo(0).IsName(m_astrStatusString[(int)(m_eStatus)]) && m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
 			{
 				SetStatus(Status.dead);
 			}
@@ -185,7 +185,8 @@ public class CharacterEnemy : BaseCharacter
 		{
 			if(m_characterAggroed.GetCurrentHP() > 0.0f)
 			{
-				if (m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+				AnimatorStateInfo info = m_animator.GetCurrentAnimatorStateInfo(0);
+				if (info.IsName(m_astrStatusString[(int)(m_eStatusToProcess)]) && info.normalizedTime >= 0.95f)
 				{
 					m_characterAggroed.TakeDamage(m_fCurrentAttackStrength);
 				}

@@ -210,8 +210,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   m_characterManager: {fileID: 0}
-  m_iMaxHP: 3
-  m_fSpeed: 150
+  m_iMaxHP: 15
+  m_fSpeed: 500
   m_fAttackStrength: 1
   m_fAttackRange: 3
   m_iLootCountMin: 1

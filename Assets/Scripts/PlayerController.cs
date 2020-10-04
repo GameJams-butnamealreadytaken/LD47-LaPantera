@@ -168,7 +168,7 @@ public class PlayerController : NetworkBehaviour
     [Client]
     private void OnEquippedObjectChanged(GameObject oldEquippedObject, GameObject newEquippedObject)
     {
-        if (!GetComponent<NetworkIdentity>().isServer)
+        if (!GetComponent<NetworkIdentity>().isServer && equippedObject != null)
         {
             equippedObject.transform.position = handBone.position;
             equippedObject.transform.rotation = handBone.rotation;

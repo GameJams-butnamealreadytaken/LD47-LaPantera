@@ -8,10 +8,12 @@ public class InteractableResource : NetworkBehaviour
 {
     public ScriptableObjects.Item resourceDescriptor;
 
+    private int currentLife;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        currentLife = resourceDescriptor.m_life;
     }
 
     // Update is called once per frame
@@ -21,16 +23,21 @@ public class InteractableResource : NetworkBehaviour
     }
     
     [Command(ignoreAuthority = true)]
-    public void CmdGather()
+    public void CmdGather(int damage)
     {
-        List<GameObject> spawnedObjects = resourceDescriptor.Spawn(this.transform.position, 1);
+        currentLife -= damage;
 
-        foreach (GameObject spawnedObject in spawnedObjects)
+        if (currentLife <= 0)
         {
-            NetworkServer.Spawn(spawnedObject);
+            List<GameObject> spawnedObjects = resourceDescriptor.Spawn(this.transform.position, 1);
+
+            foreach (GameObject spawnedObject in spawnedObjects)
+            {
+                NetworkServer.Spawn(spawnedObject);
+            }
+            
+            Destroy(this.gameObject);
         }
-        
-        Destroy(this.gameObject);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -54,6 +61,6 @@ public class InteractableResource : NetworkBehaviour
             return;
         }
         
-        CmdGather();
+        CmdGather(item.m_item.m_damage);
     }
 }

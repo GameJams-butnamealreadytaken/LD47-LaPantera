@@ -251,7 +251,7 @@ public class PlayerUI : MonoBehaviour
 			// First we uncredit all the recipe elements
 			foreach (var recipeItem in blueprint.RecipeItems)
 			{
-				PartyInventory.Instance.UnCreditResource(recipeItem.m_item, recipeItem.m_quantity);
+				PartyInventory.Instance.UnCreditResource(recipeItem.m_item.name, recipeItem.m_quantity);
 			}
 			
 			//

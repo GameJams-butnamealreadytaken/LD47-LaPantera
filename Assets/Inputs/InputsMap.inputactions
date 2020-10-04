@@ -7,7 +7,7 @@
             "actions": [
                 {
                     "name": "Move",
-                    "type": "Value",
+                    "type": "PassThrough",
                     "id": "d3f08f71-38d9-4ff0-9491-9b04e75425a8",
                     "expectedControlType": "Vector2",
                     "processors": "",
@@ -31,7 +31,7 @@
                 },
                 {
                     "name": "ActionBarMove",
-                    "type": "Value",
+                    "type": "PassThrough",
                     "id": "18b4825c-5c8e-4af8-8691-5cc8ffb14dd3",
                     "expectedControlType": "Vector2",
                     "processors": "",
@@ -385,7 +385,7 @@
                 },
                 {
                     "name": "Move",
-                    "type": "Value",
+                    "type": "PassThrough",
                     "id": "353f23c8-4767-4e63-9c23-4aa96cc5489e",
                     "expectedControlType": "Vector2",
                     "processors": "",

@@ -138,6 +138,11 @@ public class PlayerUI : MonoBehaviour
 		
 		private void UpdateResourcesCount()
 		{
+			if (!PartyInventory.Instance)
+			{
+				return;
+			}
+			
 			foreach (var itemToTextQuantity in m_perResourceQuantityText) // loop through both
 			{
 				if (PartyInventory.Instance.Resources.ContainsKey(itemToTextQuantity.m_item.name))

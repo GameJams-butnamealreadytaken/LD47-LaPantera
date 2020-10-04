@@ -190,24 +190,24 @@ public class PartyInventory : NetworkBehaviour
 
 	private void OnGUI()
 	{
-		if (GUILayout.Button("Go !"))
-		{
-			SceneManager.LoadScene(0);
-		}
-
-		if (GUILayout.Button("Unlock recipe !"))
-		{
-			m_unlockedBlueprints.Add(m_tempUnlockRecipe.name);
-		}
-
-		if (GUILayout.Button("Add Wood *2 "))
-		{
-			CreditResource(m_tmpWood, 2);
-		}
-		
-		if (GUILayout.Button("Add Rock *3 "))
-		{
-			CreditResource(m_tmpRock, 3);
-		}
+		// if (GUILayout.Button("Go !"))
+		// {
+		// 	SceneManager.LoadScene(0);
+		// }
+		//
+		// if (GUILayout.Button("Unlock recipe !"))
+		// {
+		// 	m_unlockedBlueprints.Add(m_tempUnlockRecipe.name);
+		// }
+		//
+		// if (GUILayout.Button("Add Wood *2 "))
+		// {
+		// 	CreditResource(m_tmpWood, 2);
+		// }
+		//
+		// if (GUILayout.Button("Add Rock *3 "))
+		// {
+		// 	CreditResource(m_tmpRock, 3);
+		// }
 	}
 }

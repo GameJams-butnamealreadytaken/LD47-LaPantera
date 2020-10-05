@@ -44,6 +44,8 @@ public class CharacterEnemy : BaseCharacter
 	private float m_fDurationWalkToIdle;
 	private NavMeshAgent m_agent;
 
+	private bool m_bHasAttacked = false;
+
 	private new void Start()
 	{
 		base.Start();
@@ -186,9 +188,18 @@ public class CharacterEnemy : BaseCharacter
 			if(m_characterAggroed.GetCurrentHP() > 0.0f)
 			{
 				AnimatorStateInfo info = m_animator.GetCurrentAnimatorStateInfo(0);
-				if (info.IsName(m_astrStatusString[(int)(m_eStatusToProcess)]) && info.normalizedTime >= 0.95f)
+				if (info.IsName(m_astrStatusString[(int)(m_eStatusToProcess)]))
 				{
-					m_characterAggroed.TakeDamage(m_fCurrentAttackStrength);
+					float fDistance = 0.0f;
+					if(info.normalizedTime >= 0.5f && !m_bHasAttacked && ResolveAggroDetection(m_characterAggroed, ref fDistance))
+					{
+						m_characterAggroed.TakeDamage(m_fCurrentAttackStrength);
+						m_bHasAttacked = true;
+					}
+					else if (info.normalizedTime < 0.2f && m_bHasAttacked)
+					{
+						m_bHasAttacked = false;
+					}
 				}
 			}
 		}

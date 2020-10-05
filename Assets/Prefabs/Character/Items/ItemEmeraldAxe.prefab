@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8575529705599530923}
   - component: {fileID: 8103017385822247486}
   m_Layer: 0
-  m_Name: ItemAxe
+  m_Name: ItemEmeraldAxe
   m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,7 +62,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 383026b468f0da149bb8219fb55ce738, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_item: {fileID: 11400000, guid: 01c188e6df6b2464f95fbd75dcadcdc6, type: 2}
+  m_item: {fileID: 11400000, guid: 6d376cd46734dbe41886c1edc81b67cd, type: 2}
 --- !u!65 &8103017385822247486
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -153,6 +153,18 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: f789bc992ef0dc84c9aacefc80aaedc6,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 5604539269314155553, guid: 85b039a1f1d0d00439225a5e99bf26c4,
+        type: 3}
+    - target: {fileID: -7511558181221131132, guid: f789bc992ef0dc84c9aacefc80aaedc6,
+        type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 5604539269314155553, guid: 85b039a1f1d0d00439225a5e99bf26c4,
+        type: 3}
     - target: {fileID: 919132149155446097, guid: f789bc992ef0dc84c9aacefc80aaedc6,
         type: 3}
       propertyPath: m_Name

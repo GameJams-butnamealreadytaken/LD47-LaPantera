@@ -79,6 +79,8 @@ public class PlayerControllerUI : MonoBehaviour
 		{
 			Craft();
 		}
+		
+		m_playerUI.SetHP(GetComponent<PlayerController>().CharacterPlayer.m_fCurrentHP, GetComponent<PlayerController>().CharacterPlayer.m_iMaxHP);
 	}
 
 	private void OnOpenInventory()

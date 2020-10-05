@@ -15,5 +15,8 @@ MonoBehaviour:
   m_name: Magic Stone
   m_description: A mysterious magic stone
   m_type: 0
+  m_damage: 0
+  m_life: 0
   m_icon: {fileID: 21300000, guid: fc285020eae293242b77ba0684b60bce, type: 3}
-  m_prefab: {fileID: 0}
+  m_prefab: {fileID: 6540863123214768701, guid: 9b191edf70aac0348a15b84d29e57e54,
+    type: 3}

@@ -60,6 +60,8 @@ public class PlayerUI : MonoBehaviour
 
 		[SerializeField]
 		private TMP_Text m_informationText;
+
+		public TMP_Text m_hpText;
 		
 	#endregion 
 	
@@ -273,6 +275,11 @@ public class PlayerUI : MonoBehaviour
 			}
 
 
+		}
+
+		public void SetHP(float _hp, float _max)
+		{
+			m_hpText.text = "Life : " + _hp.ToString() + " / " + _max.ToString();
 		}
 		
 	#endregion

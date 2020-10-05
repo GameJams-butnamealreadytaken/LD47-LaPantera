@@ -49,7 +49,9 @@ public class PlayerController : NetworkBehaviour
 
 		Camera.main.gameObject.GetComponent<CameraManager>().PlayerTarget = gameObject;
 		
-		CmdEquipObject(0);
+		CmdEquipObject("");
+
+		GameObject.Find("Action Bar").GetComponent<ActionBar>().m_delegateActiveItemChanged += OnActionBarItemChanged;
 	}
 
 	[Client]
@@ -220,7 +222,7 @@ public class PlayerController : NetworkBehaviour
 	}
 
 	[Command]
-	private void CmdEquipObject(int objectIndex)
+	private void CmdEquipObject(string name)
 	{
 		if (equippedObject != null)
 		{
@@ -228,17 +230,25 @@ public class PlayerController : NetworkBehaviour
 			equippedObject = null;
 		}
 
-		if (objectIndex < 0)
+		if (name.Length == 0)
 		{
-			return;
+			name = "Hand";
 		}
-		
-		GameObject spawnedObject = Instantiate(equipableObjects[objectIndex], handBone.position, handBone.rotation);
-		spawnedObject.transform.SetParent(handBone);
-		
-		NetworkServer.Spawn(spawnedObject);
 
-		equippedObject = spawnedObject;
+		foreach(GameObject item in equipableObjects)
+		{
+			if (item.GetComponent<Item>().m_item.m_name == name)
+			{
+				GameObject spawnedObject = Instantiate(item, handBone.position, handBone.rotation);
+				spawnedObject.transform.SetParent(handBone);
+				
+				NetworkServer.Spawn(spawnedObject);
+
+				equippedObject = spawnedObject;
+
+				break;
+			}
+		}
 	}
 
     [Client]
@@ -254,4 +264,17 @@ public class PlayerController : NetworkBehaviour
             equippedObject.transform.SetParent(handBone);   
         }
     }
+
+	[Client]
+	private void OnActionBarItemChanged(ActionBarItem item)
+	{
+		if (item.GetItem() == null)
+		{
+			CmdEquipObject("");
+		}
+		else
+		{
+			CmdEquipObject(item.GetItem().m_name);
+		}
+	}
 }

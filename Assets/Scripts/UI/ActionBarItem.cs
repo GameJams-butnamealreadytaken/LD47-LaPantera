@@ -61,4 +61,9 @@ public class ActionBarItem : MonoBehaviour
 	{
 		return null != m_item;
 	}
+
+	public ScriptableObjects.Item GetItem()
+	{
+		return m_item;
+	}
 }

@@ -14,6 +14,18 @@ public class ActionBar : MonoBehaviour
 	[Tooltip("The inventory slots")]
 	public GameObject[] m_slots = new GameObject[6];
 
+	public delegate void DelegateActiveItemChanged(ActionBarItem item);
+	public DelegateActiveItemChanged m_delegateActiveItemChanged;
+
+
+	private void Start() 
+	{
+		foreach (var slot in m_slots)
+		{
+			slot.GetComponent<ActionBarSlot>().SetActionBar(this);
+		}		
+	}
+
 	public GameObject GetFreeSlot()
 	{
 		foreach (var slot in m_slots)
@@ -25,5 +37,13 @@ public class ActionBar : MonoBehaviour
 		}
 
 		return null;	//< there is no available slot
+	}
+
+	public void NotifyActiveItemChanged(ActionBarItem item)
+	{
+		if (m_delegateActiveItemChanged != null)
+		{
+			m_delegateActiveItemChanged(item);
+		}
 	}
 }

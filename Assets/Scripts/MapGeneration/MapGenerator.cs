@@ -52,6 +52,17 @@ public class MapGenerator : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        NetworkManagerCustom manager = GameObject.FindObjectOfType<NetworkManagerCustom>();
+        if (manager.SeedIsInit)
+        {
+            Random.state = manager.RandomSeed;
+        }
+        else
+        {
+            manager.RandomSeed = Random.state;
+            manager.SeedIsInit = true;
+        }
+
         _realSize = new Vector2(mapXSize * tileXScale, mapZSize * tileZScale);
         _middlePoint = _realSize * 0.5f;
         

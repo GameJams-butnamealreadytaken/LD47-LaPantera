@@ -7,6 +7,9 @@ using Mirror;
 
 public class NetworkManagerCustom : NetworkManager
 {
+	public bool SeedIsInit = false;
+	public Random.State RandomSeed;
+
 	public PlayerManager m_PlayerManager;
 
 	public override void OnServerAddPlayer(NetworkConnection conn)
@@ -23,8 +26,6 @@ public class NetworkManagerCustom : NetworkManager
 			Assert.IsTrue(false);
 		}
 	}
-
-
 
 	public override void OnServerSceneChanged(string sceneName)
 	{

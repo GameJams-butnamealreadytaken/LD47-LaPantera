@@ -29,6 +29,8 @@ public class PlayerController : NetworkBehaviour
 
     private bool bResetInputs = true;
     private GameObject oldEquippedObject = null;
+
+	bool bIsDying = false;
     
     void Start()
     {
@@ -56,7 +58,11 @@ public class PlayerController : NetworkBehaviour
 		if (!hasAuthority || !isLocalPlayer)
 			return;
 
-		if (!GetComponent<PlayerControllerUI>().IsInInventory())
+		if (GetComponent<PlayerControllerUI>().IsInInventory())
+		{
+			InputMoveValues = Vector2.zero;
+		}
+		else
 		{
 			InputMoveValues = value.Get<Vector2>();
 		}
@@ -65,6 +71,9 @@ public class PlayerController : NetworkBehaviour
 	[Client]
 	public void OnAction(InputValue value)
 	{
+		if (!hasAuthority || !isLocalPlayer)
+			return;
+
 		if (bInteracting)
 		{
 			return;
@@ -73,13 +82,29 @@ public class PlayerController : NetworkBehaviour
         bInteracting = true;
         animator.SetBool("Interact", true);
     }
-    
-    void FixedUpdate()
+
+	[ClientRpc]
+	public void OnDeath()
+    {
+		if (!hasAuthority || !isLocalPlayer)
+			return;
+
+		rb.velocity = Vector3.zero;
+		animator.SetBool("Walking", false);
+		bWalking = false;
+
+		animator.SetBool("Dying", true);
+		bIsDying = true;
+	}
+
+	[Client]
+	void FixedUpdate()
     {
 		//
 		// Do not update if dead
 		if(CharacterPlayer.GetCurrentHP() <= 0)
 		{
+			rb.velocity = Vector3.zero;
 			return;
 		}
 	    
@@ -160,7 +185,8 @@ public class PlayerController : NetworkBehaviour
 			animator.SetBool("Interact", false);
 		}
 	}
-	
+
+	[Client]
 	void Update()
 	{
 		if (!hasAuthority || !isLocalPlayer)
@@ -179,6 +205,16 @@ public class PlayerController : NetworkBehaviour
 				Inputs.SwitchCurrentControlScheme(Inputs.defaultControlScheme);
 				Inputs.ActivateInput();
 				bResetInputs = false;
+			}
+
+			if (bIsDying)
+            {
+				if (animator.GetCurrentAnimatorStateInfo(0).IsName("Death"))
+				{
+					// Need to reset parameter state since we use "Any State"
+					animator.SetBool("Dying", false);
+					bIsDying = false;
+				}
 			}
 		}
 	}

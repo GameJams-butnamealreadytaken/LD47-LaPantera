@@ -9,6 +9,8 @@ public class CharacterPlayer : BaseCharacter
     public List<Texture> aSkins;
     public SkinnedMeshRenderer CharacterSkin;
 
+    public PlayerController playerController;
+
     [SyncVar]
     public int skinId = 0;
 
@@ -33,7 +35,8 @@ public class CharacterPlayer : BaseCharacter
 		//
 		// Notify
 		((PlayerManager)(m_characterManager)).OnPlayerDying(this);
-	}
+        playerController.OnDeath();
+    }
 
 	[Server]
 	protected override void OnCharacterDeath()

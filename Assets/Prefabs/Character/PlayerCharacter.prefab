@@ -298,6 +298,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 33d381644ff0b884299815a06b1e77f0, type: 3}
   - {fileID: 2800000, guid: 34f45b641fba3a946a81d3ae0c17f73d, type: 3}
   CharacterSkin: {fileID: 8130949811765152925}
+  playerController: {fileID: 5745191955640315864}
   skinId: 0
 --- !u!114 &3056273458796770497
 MonoBehaviour:

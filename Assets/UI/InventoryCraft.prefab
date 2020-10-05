@@ -4042,13 +4042,13 @@ PrefabInstance:
     - target: {fileID: 865945368862509053, guid: 097926585bd7f3846838d3b7e34a2c62,
         type: 3}
       propertyPath: m_Name
-      value: Inventory Blueprint Element 8 (Emerald Sword)
+      value: Inventory Blueprint Element 8 (Emerald Axe)
       objectReference: {fileID: 0}
     - target: {fileID: 865945369682327401, guid: 097926585bd7f3846838d3b7e34a2c62,
         type: 3}
       propertyPath: m_blueprint
       value: 
-      objectReference: {fileID: 11400000, guid: 22e2f97df402a7b44988f96f8970d750,
+      objectReference: {fileID: 11400000, guid: 90c4eed2537f47344ad5de668da10730,
         type: 2}
     - target: {fileID: 1759526916673559270, guid: 097926585bd7f3846838d3b7e34a2c62,
         type: 3}

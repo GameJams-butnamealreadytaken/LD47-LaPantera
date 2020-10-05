@@ -112,6 +112,8 @@ MonoBehaviour:
   equipableObjects:
   - {fileID: 8814004972467976107, guid: 35caf45206cc44940b5a84e85f9f4a3e, type: 3}
   - {fileID: 8814004972467976107, guid: 1445855dd6e0ac64f8ee19e841b312a7, type: 3}
+  - {fileID: 8814004972467976107, guid: 17d7481d22a512940ad6de644255c73a, type: 3}
+  - {fileID: 8814004972467976107, guid: 0735a5821619bb74882fd49ec4d0c398, type: 3}
 --- !u!114 &6259364941133615106
 MonoBehaviour:
   m_ObjectHideFlags: 0
